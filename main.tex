@@ -191,7 +191,7 @@ Given an overview of the steps here.
     \item \textbf{Source Extraction}. We use \code{Source Extractor} \citep{Bertin1996} to detect sources on the ``cleaned'' images produced in the previous step. This step remains largely the same as in \citetalias{Greco2018}. The images are convoled with a Gaussian kernel of FWHM=$1\arcsec$ to maximize the contrast. We take a mesh size of $43\arcsec$ (doubles the size used in \citetalias{Greco2018}) to measure the local bacbkground and detect objects that are 0.7$\sigma$ per pixel above the local sky. We also require the object contains at least 100 contiguous pixels to further remove small compact objects. We perform the detection in $g$-band but require all the sources are also detected in $r$-band to exclude possible artifacts. 
     
     \item \textbf{Initial Sample Selection}. In this step, we take the output catalog from the previous step and remove those objects that are not likely to be LSBGs of interest. To be specific, we require objects have $g$-band half-light radius (measured by Source Extractor) larger than $r_{\rm min} = 2.0\arcsec$. We also require the measured colors to satisfy $-0.1 < g-i < 1.4$ and $|(g-r) - 0.7\cdot (g-i)| < 0.4$. %These cuts are the same as in \citetalias{Greco2018}. 
-    \textbf{Morphology? Auto-correlation?}
+    \textbf{Morphology? Auto-correlation? See `build_catalog.py` in `/tigress/jgreco/project-code/hugs-s18a-ana/scripts`}
     
     
 \end{enumerate}
@@ -286,9 +286,35 @@ Why use scarlet: color info, non-par, monotonic, standard in future HSC, fast, h
 We do not do scarlet fitting for the entire initial sample, because time consuming. We first match with MW hosts. 
 
 
+\subsection{Modeling}\label{sec:modeling}
+Although vanilla scarlet does a good job on removing false positives, the measured size, magnitude, and surface brightness on the vanilla scarlet model are quite biased. These measurements cannot be used to derive the physical properties of LSBGs. 
 
-\subsection{Completeness}
+The non-parametric modeling in \code{scarlet} assumes weak correlation between pixels by imposing the monotonicity constraint. This leads to two problems when applying vanilla scarlet to the LSBGs. First, since pixels are not strongly correlated in the model, the model cannot capture the galaxy light at very low signal-to-noise ratio. Second, the monotonicity constraint stops the model to grow in certain directions if there is another source along this direction, otherwise the monotonicity is broken. This issue, dubbed as the ``cookie-cutter effect'', can be seen in Figure \ref{fig:vanilla_scarlet_demo}. As a result, the non-parametric model often does not capture the LSB outskirts of LSBG, thus biases the measuremenets. 
 
+On the other side, parametric modeling imposes a very strong correlation on pixels. For example, using a 1-D light profile such as \sersic{}, pixels within an isophote are assumed to have the same intensity. Therefore, the signal-to-noise ratio in the outskirts is boosted by effectively combing the information from many pixels. The parametric model also does not suffer from the ``cookie-cutter'' issue. 
+
+A traditional way of doing parametric modeling is to first mask out contaminants based on the detection segmentation map, then fit a model to the masked image. However, the fitting results are very sensitive to the masking scheme \citep[e.g.,][]{Greco2018}. A possible solution to this problem is to model all the objects in the cutout simultaneously using parametric models (e.g., in DECaLS, \citealt{Dey2019}). In this work, we combine the advantage of parametric modeling with the power of deblending in \code{scarlet}. To be specific, we follow the spirit of deblending as described in Section \ref{sec:deblending}, but replace the non-parametric model for the target with a parametric model. In this way, the LSB outskirts of LSBGs can be better captured with the parametric model and the impact of contaminants is minimized. 
+
+We use the Spergel light profile to model the LSBGs. The Spergel profile is motivated by having a simple analytical expression in Fourier space, making it easy to be convolved with a PSF.\footnote{On the opposite, the \sersic{} profile does not have a simple analytic form in Fourier space.} The surface brightness of a Spergel profile \citep{Spergel2010} has a form of
+\begin{equation}
+    \label{eq:spergel}
+    I_\nu(r) = \frac{c_{\nu}^{2} L_{0}}{2\pi r_{0}^{2}} f_{\nu}\left(\frac{c_{\nu} r}{r_{0}}\right),
+\end{equation}
+where 
+\begin{equation}
+    f_{\nu}(u)=\left(\frac{u}{2}\right)^{\nu} \frac{K_{\nu}(u)}{\Gamma(\nu+1)},
+\end{equation}
+and $K_\nu(u)$ is the Modified Bessel function of the second kind. The half-light radius is $r_0$, the total luminosity is $L_0$, and $c_\nu$ satisfyies the equation $(1 + \nu)f_{\nu + 1}(c_\nu) = 1/4$. Similar to the \sersic{} index, the parameter $\nu$ (Spergel index) controls the concentration of the light profile. As shown in Appendix \ref{ap:spergel}, the Spergel profile approximates the \sersic{} profile very well over the range of \sersic{} index that is interested to the study of LSBGs.
+
+There are several changes in the modeling compared to the deblending step. First, we intialize a vanilla scarlet model for the target object as in Section \ref{sec:deblending}. Then we measure the half-light radius, total flux, and shape of the scarlet model. We use these numbers to initialize the Spergel profile. The size of the bounding box is also updated to be the maximum between 250 pixel and $10\, r_e$. Objects within this bounding box are included in the modeling, but only the target object is modeled by the Spergel profile. For the target, we still requires positivity constraint, as the mononicity is automatically satisfied. 
+
+After optimization, we take the $r_0$ in Equation \eqref{eq:spergel} as the circularized half-light radius $r_e$, and take the $L_0$ as the total flux. The average surface brightness $\overline{\mu}_{\rm eff}$ is calculated in the same way as in Section \ref{sec:non-par-measurement}. 
+
+We characterize the quality of the Spergel modeling by injecting mock \sersic{} galaxies into the cutout and compare the recovered properties with the truth, as shown in Appendix \ref{sec:meas_unc}. Overall speaking, the measurement agrees with the truth quite well. However, the size and the total flux of galaxies below $\overline{\mu}_{\rm eff} (g) > 27$ is under-estiamted. We also characterize the bias and the scatter in measurement as a function of size and surface brightness. We apply the bias correction to the measurement of LSBGs, and incorporate the measurement error into the science figures. 
+
+\subsection{Completeness and Measurement Uncertainty}
+
+\subsubsection{Completeness}\label{sec:completeness}
 \begin{figure*}
 	\vbox{ 
 		%\vskip -10mm
@@ -314,37 +340,46 @@ For the deblending completeness, we inject 5,000 mock \sersic{} galaxies into th
 
 The combined completeness is shown in the right panel of Figure \ref{fig:completeness}. The countours shows the 70\%, 50\%, and 20\% completenesses, respectively. \textbf{Also compare our completeness with other surveys.}
 
-\textbf{Make sure that completeness is assigned based on the bias-corrected size and SB.}
+%\textbf{Make sure that completeness is assigned based on the bias-corrected size and SB.} Checked. No problem.
 
+\subsubsection{Measurement uncertainty}\label{sec:meas_unc}
+We characterize the quality of the Spergel modeling by injecting mock \sersic{} galaxies into the cutout and compare the recovered properties with the truth, as shown in Appendix \ref{sec:meas_unc}. Overall speaking, the measurement agrees with the truth quite well. However, the size and the total flux of galaxies below $\overline{\mu}_{\rm eff} (g) > 27$\sbunit is under-estiamted. We also characterize the bias and the scatter in measurement as a function of size and surface brightness. We apply the bias correction to the measurement of LSBGs, and incorporate the measurement error into the science figures. 
 
-\subsection{Modeling and measurement error}\label{sec:modeling}
-Although vanilla scarlet does a good job on removing false positives, the measured size, magnitude, and surface brightness on the vanilla scarlet model are quite biased. These measurements cannot be used to derive the physical properties of LSBGs. 
+In order to test how well do we recover the photometric and structural parameters in the modeling step (Sec \ref{sec:modeling}), we take the 5,000 mock \sersic{} galaxies used for computing the deblending completeness and model them using the Spergel light profile. We compare the fitting results with the ground truth in Figure \ref{fig:meas_bias}, where $\Delta(X) = X(\rm truth) - X(\rm measured)$, and x-axis corresponds to the truth values. We find that the measured half-light radius $r_e$ is biased to be smaller than the truth, and the bias depends on the surface brightness and apparent size. For surface brightness fainter than 27\ \sbunit, the measured size can be much smaller than the truth. As a result, the apparent magnitude $m$ and the average surface brightness $\overline{\mu}_{\rm eff}$ are also measured to be fainter than the truth. 
 
-The non-parametric modeling in \code{scarlet} assumes weak correlation between pixels by imposing the monotonicity constraint. This leads to two problems when applying vanilla scarlet to the LSBGs. First, since pixels are not strongly correlated in the model, the model cannot capture the galaxy light at very low signal-to-noise ratio. Second, the monotonicity constraint stops the model to grow in certain directions if there is another source along this direction, otherwise the monotonicity is broken. This issue, dubbed as the ``cookie-cutter effect'', can be seen in Figure \ref{fig:vanilla_scarlet_demo}. As a result, the non-parametric model often does not capture the LSB outskirts of LSBG, thus biases the measuremenets. 
+To correct for this bias in size, surface brightness, apparant magnitude, and color, we assume that the bias only depends on the size and surface brightness. Indeed, we do not find any significant dependence of the bias on color, ellpticity, and Spergel index. We split the $r_e-\overline{\mu}_{\rm eff}(g)$ plane using a $8\times 8$ grid, and calculate the mean bias within each bin. Then we interpolate over the grid using a multiquadratic kernel\footnote{\url{https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.RBFInterpolator.html}}. Figure \ref{fig:meas_err} shows the interpolated bias terms as a function of the measured size and surface brightness. For half-light radius, we take $(r_{e, \rm t} - r_{e, \rm m}) / r_{e,\rm m}$ as the bias term; for surface brightness, we take $\overline{\mu}_{\rm eff, t}(g) - \overline{\mu}_{\rm eff, m}(g)$ as the bias term. As shown in Figure \ref{fig:meas_err}, the size and surface brightness bias grows as increasing surface brightness. The bias has a peak at $r_e\sim 6\arcsec$ because the $r_e$ shown in the figure is the measured size, not the truth size. It is the bias in size measurement that makes galaxies with large intrinsic $r_e$ pile up around $r_e\sim 6\arcsec$. We also find that the bias in $g-i$ color is quite small. 
 
-On the other side, parametric modeling imposes a very strong correlation on pixels. For example, using a 1-D light profile such as \sersic{}, pixels within an isophote are assumed to have the same intensity. Therefore, the signal-to-noise ratio in the outskirts is boosted by effectively combing the information from many pixels. The parametric model also does not suffer from the ``cookie-cutter'' issue. 
+For LSBGs in our sample, we apply corrections for the bias using the interpolated bias terms. We first correct for the bias in size, $g$-band average surface brightness, $g-r$ and $g-i$ colors. Then we calculate the $g$-band apparent magnitude following $m_g = \overline{\mu}_{\rm eff}(g) - 2.5\log(2\pi r_e^2)$. The magnitudes and surface brightnesses in other bands are derived using $g$-band magnitude, surface brightness, and colors. In this way, we apply a self-consistent correction for the measurement bias to the data. 
 
-A traditional way of doing parametric modeling is to first mask out contaminants based on the detection segmentation map, then fit a model to the masked image. However, the fitting results are very sensitive to the masking scheme \citep[e.g.,][]{Greco2018}. A possible solution to this problem is to model all the objects in the cutout simultaneously using parametric models (e.g., in DECaLS, \citealt{Dey2019}). In this work, we combine the advantage of parametric modeling with the power of deblending in \code{scarlet}. To be specific, we follow the spirit of deblending as described in Section \ref{sec:deblending}, but replace the non-parametric model for the target with a parametric model. In this way, the LSB outskirts of LSBGs can be better captured with the parametric model and the impact of contaminants is minimized. 
-
-We use the Spergel light profile to model the LSBGs. The Spergel profile is motivated by having a simple analytical expression in Fourier space, making it easy to be convolved with a PSF.\footnote{On the opposite, the \sersic{} profile does not have a simple analytic form in Fourier space.} The surface brightness of a Spergel profile \citep{Spergel2010} has a form of
-\begin{equation}
-    \label{eq:spergel}
-    I_\nu(r) = \frac{c_{\nu}^{2} L_{0}}{2\pi r_{0}^{2}} f_{\nu}\left(\frac{c_{\nu} r}{r_{0}}\right),
-\end{equation}
-where 
-\begin{equation}
-    f_{\nu}(u)=\left(\frac{u}{2}\right)^{\nu} \frac{K_{\nu}(u)}{\Gamma(\nu+1)},
-\end{equation}
-and $K_\nu(u)$ is the Modified Bessel function of the second kind. The half-light radius is $r_0$, the total luminosity is $L_0$, and $c_\nu$ satisfyies the equation $(1 + \nu)f_{\nu + 1}(c_\nu) = 1/4$. Similar to the \sersic{} index, the parameter $\nu$ (Spergel index) controls the concentration of the light profile. As shown in Appendix \ref{ap:spergel}, the Spergel profile approximates the \sersic{} profile very well over the range of \sersic{} index that is interested to the study of LSBGs.
-
-There are several changes in the modeling compared to the deblending step. First, we intialize a vanilla scarlet model for the target object as in Section \ref{sec:deblending}. Then we measure the half-light radius, total flux, and shape of the scarlet model. We use these numbers to initialize the Spergel profile. The size of the bounding box is also updated to be the maximum between 250 pixel and $10\, r_e$. Objects within this bounding box are included in the modeling, but only the target object is modeled by the Spergel profile. For the target, we still requires positivity constraint, as the mononicity is automatically satisfied. 
-
-After optimization, we take the $r_0$ in Equation \eqref{eq:spergel} as the circularized half-light radius $r_e$, and take the $L_0$ as the total flux. The average surface brightness $\overline{\mu}_{\rm eff}$ is calculated in the same way as in Section \ref{sec:non-par-measurement}. 
-
-We characterize the quality of the Spergel modeling by injecting mock \sersic{} galaxies into the cutout and compare the recovered properties with the truth, as shown in Appendix \ref{ap:meas_error}. Overall speaking, the measurement agrees with the truth quite well. However, the size and the total flux of galaxies below $\overline{\mu}_{\rm eff} (g) > 27$ is under-estiamted. We also characterize the bias and the scatter in measurement as a function of size and surface brightness. We apply the bias correction to the measurement of LSBGs, and incorporate the measurement error into the science figures. 
+Besides, it is also important to characterize the measurement uncertainty. The measurement uncertainty consists of a statistical uncertainty which is determined by the shape of the likelihood (posterior) surface, and a systematic uncertainty which is related to various factors including sky subtraction, contamination effects, etc. Unlike other parametric modeling code such as \code{galfit} or \code{imfit}, \code{scarlet} does not explore the full likelihood (posterior) space but rather finds one optimial solution. Thus we cannot get a statistical error of the measured properties from \code{scarlet}. However, by comparing the recovered properties of mock galaxies with the truth, we can empirically estimate the measurement uncertainty without knowing the impact of each factor. Following the same way of calculating the bias, in each bin, we compute the standard deviation of the difference between the truth and the bias-corrected measurement, then we interpolate over the grid. The measurement errors are shown in Figure \ref{fig:meas_err} as contours. 
 
 
 
+TBD: re-think the way of computing the error, especially for $r_e$. 
+
+
+vdB 16 doesn't consider whether GALFIT gives the corrrect $R_e$, when deriving the completeness (recovered fraction)
+
+Remember to ref SMUDGES papers here.
+
+\begin{figure*}
+	\vbox{ 
+		\centering
+		\includegraphics[width=1\linewidth]{meas_bias.pdf}
+	}
+    \caption{Caption}
+    \label{fig:meas_bias}
+\end{figure*}
+
+
+\begin{figure*}
+	\vbox{ 
+		\centering
+		\includegraphics[width=1\linewidth]{meas_error_spergel.pdf}
+	}
+    \caption{Caption}
+    \label{fig:meas_err}
+\end{figure*}
 
 \section{UDGs in Milky-Way analogs}
 
@@ -353,7 +388,7 @@ The goal of this paper is to study the UDG population hosted by MW-like galaxies
 
 Since UDGs are relatively scarce in MW-like hosts \citep{SAGA-II,CarlstenELVES2022}, it is helpful to probe a larger volume to obtain good statistics. However, UDGs will be too small and faint to be detected in HSC images beyond certain distances. We choose our redshift range to be $0.01 < z < 0.04$, which makes sure that we can detect a significant number of faint dwarf galaxies around MW-like hosts. We exclude galaxies $z<0.01$ because 1) the number is very small; 2) their large angular size makes them shredded in deblending step, including them will introduce a lot of spurious LSB objects. Our MW analogs sample complements the ELVES sample and SAGA sample in redshift range. 
 
-After applying the stellar mass and redshift cuts to the NSA catalog, there are 23,218 galaxies left. Then we match them to the LSBG catalog (described in Section \ref{sec:detection}) as follows. For a given MW-like host, we first calculate its virial radius $R_{\rm vir}$ assuming the stellar mass-halo mass relation in \citet{Behroozi2010}. It turns out that 40\% of hosts have virial radii larger than 300 kpc. Then we identify any LSBG that falls into the projected angular virial radius of the host. Then these LSBGs are associated with the host. We repeat this process for all hosts. If one LSBG is associated to multiple hosts, we assign it to the nearest host (normalized by the angular size of virial radius). In the end, we have 901 MW-like hosts and 8,367 LSBG candidates associated with them. However, there are still a significant fraction of spurious objects in this LSBG sample, including galactic cirrus, tidal tails/streams, shrreded large galaxies, compact sources in galaxy outskirts, etc. In the following, we perform a deblending step to effectively remove these spurious objects. 
+After applying the stellar mass and redshift cuts to the NSA catalog, there are 23,218 galaxies left. Then we match them to the LSBG catalog (described in Section \ref{sec:detection}) as follows. For a given MW-like host, we first calculate its virial radius $R_{\rm vir}$ assuming the stellar mass-halo mass relation in \citet{Behroozi2010}. It turns out that 40\% of hosts have virial radii larger than 300 kpc. Then we identify any LSBG that falls into the projected angular virial radius of the host. Then these LSBGs are associated with the host. We repeat this process for all hosts. If one LSBG is associated to multiple hosts, we assign it to the nearest host (normalized by the angular size of virial radius). Finally, we have 901 MW-like hosts and 8,367 LSBG candidates associated with them. However, there are still a significant fraction of spurious objects in this LSBG sample, including galactic cirrus, tidal tails/streams, shrreded large galaxies, compact sources in galaxy outskirts, etc. In the following, we perform a deblending step to effectively remove these spurious objects. 
 
 \subsection{UDG sample and UPG sample}
 Remember to filter the UDG sample through the FDFC mask, and also remove duplicated objects.
@@ -362,12 +397,35 @@ Also append the catalog.
 
 Plot the UDG and UPG population on the re-abs mag plane (Bovy book)
 
-\begin{figure}
-    \centering
-    \includegraphics[width=1\linewidth]{size_distribution.pdf}
+
+\begin{figure*}
+	\vbox{ 
+		\centering
+		\includegraphics[width=1\linewidth]{size_distribution.pdf}
+	}
     \caption{Caption}
     \label{fig:size_distribution}
-\end{figure}
+\end{figure*}
+
+
+\begin{figure*}
+	\vbox{ 
+		\centering
+		\includegraphics[width=1\linewidth]{radial_distribution.pdf}
+	}
+    \caption{Caption}
+    \label{fig:radial_distribution}
+\end{figure*}
+
+
+\begin{figure*}
+	\vbox{ 
+		\centering
+		\includegraphics[width=1\linewidth]{N_UDG_host_mass.pdf}
+	}
+    \caption{Caption}
+    \label{fig:n_udg}
+\end{figure*}
 
 \subsection{Spatial distribution}
 
@@ -381,17 +439,16 @@ Scenarios:
 2. accreting field UDGs, and quench them due to ram pressure stripping. But how long do accreted UDGs last before being destroyed? Need to look at ram pressure stripping literature.
 
 Homework:
-1. 1-sigma definition, UPG
+1. 1.5-sigma definition, UPG
 2. number of UDG per host, as a function of host mass bins.
 3. Move the stellar mass bin definition, try to match with red/blue, spiral/elliptical plot. If cannot match, does this hint the formation scenarios?
 4. How significant do we detect blue UDGs? 
 5. Split into redshift bins
 
 
-
 TODO:
 1. rerun the matching, compensate the left ~1000 LSBGs.
-2. galactic extinction.
+2. galactic extinction. Done!!!
 
 UDG rejuvenate after ram pressure stripping?
 
@@ -406,8 +463,11 @@ Compare spatial distribution with normal dwarf? iF they are indeed high-spin tai
 
 
 \section*{Acknowledgment}
-JL is grateful for discussions with XXX.
+JL is grateful for discussions with XXX. The authors thank Yao-Yuan Mao for his tool for visualizing image cutouts. 
 
+The Hyper Suprime-Cam (HSC) collaboration includes the astronomical communities of Japan and Taiwan, and Princeton University. The HSC instrumentation and software were developed by National Astronomical Observatory of Japan (NAOJ), Kavli Institute for the Physics and Mathematics of the Universe (Kavli IPMU), University of Tokyo, High Energy Accelerator Research Organization (KEK), Academia Sinica Institute for Astronomy and Astrophysics in Taiwan (ASIAA) and Princeton University.  
+Funding was contributed by the FIRST program from Japanese Cabinet Office, Ministry of Education, Culture, Sports, Science and Technology (MEXT), Japan Society for the Promotion of Science (JSPS), Japan Science and Technology Agency (JST), Toray Science Foundation, NAOJ, Kavli IPMU, KEK, ASIAA and Princeton University.
+\vspace{1em}
 \software{\href{http://www.numpy.org}{\code{NumPy}} \citep{Numpy},
           \href{https://www.astropy.org/}{\code{Astropy}} \citep{astropy}, \href{https://www.scipy.org}{\code{SciPy}} \citep{scipy}, \href{https://matplotlib.org}{\code{Matplotlib}} \citep{matplotlib},
           \href{https://halotools.readthedocs.io/en/latest}{\code{Halotools}} \citep{Hearin2017},
@@ -462,15 +522,6 @@ vdB 16 doesn't consider whether GALFIT gives the corrrect $R_e$, when deriving t
 
 Remember to ref SMUDGES papers here.
 
-\begin{figure*}
-	\vbox{ 
-		\centering
-		\includegraphics[width=1\linewidth]{meas_error_spergel.pdf}
-	}
-    \caption{Caption}
-    \label{fig:meas_err}
-\end{figure*}
-
 
 \section{Catalog}
 \onecolumngrid 
@@ -518,7 +569,7 @@ $A_i$                    & mag     & $i$-band Galactic extinction \\
 These tables are published in their entirety in machine-readable format.
 Magnitudes are on the AB system and have not been corrected for Galactic
 extinction. We provide Galactic extinction corrections, which are derived from
-the \citet{Schlafly:2011aa} recalibration of the \citet{Schlegel:1998aa} dust maps. 
+the \citet{Schlafly2011} recalibration of the \citet{SFD1998} dust maps. 
 }
 \end{table}
 
