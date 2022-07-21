@@ -67,7 +67,9 @@
 \newcommand{\vdag}{(v)^\dagger}
 \newcommand\aastex{AAS\TeX}
 \newcommand\latex{La\TeX}
-\newcommand{\sbunit}{mag~arcsec$^{-2}$}
+% \newcommand{\sbunit}{mag~arcsec$^{-2}$}
+\newcommand{\sbunit}{\mathrm{mag\ arcsec}^{-2}}
+\newcommand{\sbeff}{\overline{\mu}_{\mathrm{eff}}(g)}
 
 \newcommand{\code}[1]{\textbf{\texttt{#1}}}
 \newcommand{\sersic}{S\'ersic}
@@ -178,7 +180,7 @@ We use the NASA-Sloan Atlas (NSA \footnote{\url{http://nsatlas.org}}, \citealt{B
 
 
 
-\section{Methodology}
+\section{LSBG search in HSC S18A}
 Given an overview of the steps here.
 
 \subsection{Source Detection}\label{sec:detection}
@@ -197,7 +199,7 @@ Given an overview of the steps here.
     \item \textbf{Source Extraction}. We use \code{Source Extractor} \citep{Bertin1996} to detect sources on the ``cleaned'' images produced in the previous step. This step remains largely the same as in \citetalias{Greco2018}. The images are convoled with a Gaussian kernel of FWHM=$1\arcsec$ to maximize the contrast. We take a mesh size of $43\arcsec$ (doubles the size used in \citetalias{Greco2018}) to measure the local bacbkground and detect objects that are 0.7$\sigma$ per pixel above the local sky. We also require the object contains at least 100 contiguous pixels to further remove small compact objects. We perform the detection in $g$-band but require all the sources are also detected in $r$-band to exclude possible artifacts. 
     
     \item \textbf{Initial Sample Selection}. In this step, we take the output catalog from the previous step and remove those objects that are not likely to be LSBGs of interest. To be specific, we require objects have $g$-band half-light radius (measured by Source Extractor) larger than $r_{\rm min} = 2.0\arcsec$. We also require the measured colors to satisfy $-0.1 < g-i < 1.4$ and $|(g-r) - 0.7\cdot (g-i)| < 0.4$. %These cuts are the same as in \citetalias{Greco2018}. 
-    \textbf{Morphology? Auto-correlation? See `build_catalog.py` in `/tigress/jgreco/project-code/hugs-s18a-ana/scripts`}
+    %\textbf{Morphology? Auto-correlation? See `build_catalog.py` in `/tigress/jgreco/project-code/hugs-s18a-ana/scripts`}
     
     
 \end{enumerate}
@@ -318,7 +320,6 @@ After optimization, we take the $r_0$ in Equation \eqref{eq:spergel} as the circ
 
 We characterize the quality of the Spergel modeling by injecting mock \sersic{} galaxies into the cutout and compare the recovered properties with the truth, as shown in Appendix \ref{sec:meas_unc}. Overall speaking, the measurement agrees with the truth quite well. However, the size and the total flux of galaxies below $\overline{\mu}_{\rm eff} (g) > 27$ is under-estiamted. We also characterize the bias and the scatter in measurement as a function of size and surface brightness. We apply the bias correction to the measurement of LSBGs, and incorporate the measurement error into the science figures. 
 
-\textbf{Final visual inspection.}
 
 \subsection{Completeness and Measurement Uncertainty}
 
@@ -351,15 +352,15 @@ The combined completeness is shown in the right panel of Figure \ref{fig:complet
 %\textbf{Make sure that completeness is assigned based on the bias-corrected size and SB.} Checked. No problem.
 
 \subsubsection{Measurement uncertainty}\label{sec:meas_unc}
-We characterize the quality of the Spergel modeling by injecting mock \sersic{} galaxies into the cutout and compare the recovered properties with the truth, as shown in Appendix \ref{sec:meas_unc}. Overall speaking, the measurement agrees with the truth quite well. However, the size and the total flux of galaxies below $\overline{\mu}_{\rm eff} (g) > 27$\sbunit is under-estiamted. We also characterize the bias and the scatter in measurement as a function of size and surface brightness. We apply the bias correction to the measurement of LSBGs, and incorporate the measurement error into the science figures. 
+We characterize the quality of the Spergel modeling by injecting mock \sersic{} galaxies into the cutout and compare the recovered properties with the truth, as shown in Appendix \ref{sec:meas_unc}. Overall speaking, the measurement agrees with the truth quite well. However, the size and the total flux of galaxies below $\overline{\mu}_{\rm eff} (g) > 27\ \sbunit$ is under-estiamted. We also characterize the bias and the scatter in measurement as a function of size and surface brightness. We apply the bias correction to the measurement of LSBGs, and incorporate the measurement error into the science figures. 
 
-In order to test how well do we recover the photometric and structural parameters in the modeling step (Sec \ref{sec:modeling}), we take the 5,000 mock \sersic{} galaxies used for computing the deblending completeness and model them using the Spergel light profile. We compare the fitting results with the ground truth in Figure \ref{fig:meas_bias}, where $\Delta(X) = X(\rm truth) - X(\rm measured)$, and x-axis corresponds to the truth values. We find that the measured half-light radius $r_e$ is biased to be smaller than the truth, and the bias depends on the surface brightness and apparent size. For surface brightness fainter than 27\ \sbunit, the measured size can be much smaller than the truth. As a result, the apparent magnitude $m$ and the average surface brightness $\overline{\mu}_{\rm eff}$ are also measured to be fainter than the truth. 
+In order to test how well do we recover the photometric and structural parameters in the modeling step (Sec \ref{sec:modeling}), we take the 5,000 mock \sersic{} galaxies used for computing the deblending completeness and model them using the Spergel light profile. We compare the fitting results with the ground truth in Figure \ref{fig:meas_bias}, where $\Delta(X) = X(\rm truth) - X(\rm measured)$, and x-axis corresponds to the truth values. We find that the measured half-light radius $r_e$ is biased to be smaller than the truth, and the bias depends on the surface brightness and apparent size. For surface brightness fainter than $27\ \sbunit$, the measured size can be much smaller than the truth. As a result, the apparent magnitude $m$ and the average surface brightness $\overline{\mu}_{\rm eff}$ are also measured to be fainter than the truth. 
 
 To correct for this bias in size, surface brightness, apparant magnitude, and color, we assume that the bias only depends on the size and surface brightness. Indeed, we do not find any significant dependence of the bias on color, ellpticity, and Spergel index. We split the $r_e-\overline{\mu}_{\rm eff}(g)$ plane using a $8\times 8$ grid, and calculate the mean bias within each bin. Then we interpolate over the grid using a multiquadratic kernel\footnote{\url{https://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.RBFInterpolator.html}}. Figure \ref{fig:meas_err} shows the interpolated bias terms as a function of the measured size and surface brightness. For half-light radius, we take $(r_{e, \rm t} - r_{e, \rm m}) / r_{e,\rm m}$ as the bias term; for surface brightness, we take $\overline{\mu}_{\rm eff, t}(g) - \overline{\mu}_{\rm eff, m}(g)$ as the bias term. As shown in Figure \ref{fig:meas_err}, the size and surface brightness bias grows as increasing surface brightness. The bias has a peak at $r_e\sim 6\arcsec$ because the $r_e$ shown in the figure is the measured size, not the truth size. It is the bias in size measurement that makes galaxies with large intrinsic $r_e$ pile up around $r_e\sim 6\arcsec$. We also find that the bias in $g-i$ color is quite small. 
 
 For LSBGs in our sample, we apply corrections for the bias using the interpolated bias terms. We first correct for the bias in size, $g$-band average surface brightness, $g-r$ and $g-i$ colors. Then we calculate the $g$-band apparent magnitude following $m_g = \overline{\mu}_{\rm eff}(g) - 2.5\log(2\pi r_e^2)$. The magnitudes and surface brightnesses in other bands are derived using $g$-band magnitude, surface brightness, and colors. In this way, we apply a self-consistent correction for the measurement bias to the data. 
 
-Besides, it is also important to characterize the measurement uncertainty. The measurement uncertainty consists of a statistical uncertainty which is determined by the shape of the likelihood (posterior) surface, and a systematic uncertainty which is related to various factors including sky subtraction, contamination effects, etc. Unlike other parametric modeling code such as \code{galfit} or \code{imfit}, \code{scarlet} does not explore the full likelihood (posterior) space but rather finds one optimial solution. Thus we cannot get a statistical error of the measured properties from \code{scarlet}. However, by comparing the recovered properties of mock galaxies with the truth, we can empirically estimate the measurement uncertainty without knowing the impact of each factor. Following the same way of calculating the bias, in each bin, we compute the standard deviation of the difference between the truth and the bias-corrected measurement, then we interpolate over the grid. The measurement errors are shown in Figure \ref{fig:meas_err} as contours. 
+Besides, it is also important to characterize the measurement uncertainty. The measurement uncertainty consists of a statistical uncertainty which is determined by the shape of the likelihood (posterior) surface, and a systematic uncertainty which is related to various factors including sky subtraction, contamination effects, etc. Unlike other parametric modeling code such as \code{galfit} or \code{imfit}, \code{scarlet} does not explore the full likelihood (posterior) space but rather finds one optimal solution. Thus we cannot get a statistical error of the measured properties from \code{scarlet}. However, by comparing the recovered properties of mock galaxies with the truth, we can empirically estimate the measurement uncertainty without knowing the impact of each factor. Following the same way of calculating the bias, in each bin, we compute the standard deviation of the difference between the truth and the bias-corrected measurement, then we interpolate over the grid. The measurement errors are shown in Figure \ref{fig:meas_err} as contours. 
 
 
 
@@ -396,23 +397,56 @@ The goal of this paper is to study the UDG population hosted by MW-like galaxies
 
 Since UDGs are relatively scarce in MW-like hosts \citep{SAGA-II,CarlstenELVES2022}, it is helpful to probe a larger volume to obtain good statistics. However, UDGs will be too small and faint to be detected in HSC images beyond certain distances. We choose our redshift range to be $0.01 < z < 0.04$, which makes sure that we can detect a significant number of faint dwarf galaxies around MW-like hosts. We exclude galaxies $z<0.01$ because 1) the number is very small; 2) their large angular size makes them shredded in deblending step, including them will introduce a lot of spurious LSB objects. Our MW analogs sample complements the ELVES sample and SAGA sample in redshift range. 
 
-After applying the stellar mass and redshift cuts to the NSA catalog, there are 23,218 galaxies left. Then we match them to the LSBG catalog (described in Section \ref{sec:detection}) as follows. For a given MW-like host, we first calculate its virial radius $R_{\rm vir}$ assuming the stellar mass-halo mass relation in \citet{Behroozi2010}. It turns out that 40\% of hosts have virial radii larger than 300 kpc. Then we identify any LSBG that falls into the projected angular virial radius of the host. Then these LSBGs are associated with the host. We repeat this process for all hosts. If one LSBG is associated to multiple hosts, we assign it to the nearest host (normalized by the angular size of virial radius). Finally, we have 901 MW-like hosts and 8,367 LSBG candidates associated with them. However, there are still a significant fraction of spurious objects in this LSBG sample, including galactic cirrus, tidal tails/streams, shrreded large galaxies, compact sources in galaxy outskirts, etc. In the following, we perform a deblending step to effectively remove these spurious objects. 
+After applying the stellar mass and redshift cuts to the NSA catalog, there are 23,218 galaxies left. Then we match them to the LSBG catalog (described in Section \ref{sec:detection}) as follows. For a given MW-like host, we first calculate its virial radius $R_{\rm vir}$ assuming the stellar mass-halo mass relation in \citet{Behroozi2010}. It turns out that 40\% of hosts have virial radii larger than 300 kpc. Then we identify any LSBG that falls into the projected angular virial radius of the host. If one LSBG is matched to multiple hosts, we assign it to the nearest host based on the separation normalized by host virial radius. Finally, we have 901 MW-like hosts and 10,579 LSBG candidates associated with them. However, there are still a significant fraction of spurious objects in this LSBG sample, including galactic cirrus, tidal tails/streams, shredded large galaxies, compact sources in galaxy outskirts, etc. As introduced in Section \ref{sec:deblending}, we perform a deblending step to effectively remove these spurious objects. There are 2,673 objects left after the deblending cuts. Next, we model them using the Spergel profile as described in Section \ref{sec:modeling}. Based on the modeling results, we apply the same color cuts as in Section \ref{sec:deblending} and a size cut of $1.6\arcsec < r_e < 15\arcsec$ to further remove unreliable fits and false positives. We also remove duplicated objects. In the end, we have 2510 LSBG candidates as our final LSBG sample, from which we construct the ultra-diffuse galaxy (UDG) sample and the ultra-puffy galaxy (UPG) sample as follows. 
 
-\subsection{UDG sample and UPG sample}
-Remember to filter the UDG sample through the FDFC mask, and also remove duplicated objects.
+\subsection{UDG and UPG sample}\label{sec:sample}
+The UDG population is usually defined based on the surface brightness and the physical size of the galaxy. However, there are many different criteria in literature: \citep{vanDokkum2015} define UDGs to have effective radius $r_e$ larger than 1.5 kpc and central surface brightness $\mu_0(g)$ fainter than $24.0\ \sbunit$; other groups also use the surface brightness at $r_e$ \citep[e.g.,][]{DiCintio2017,Cardona-Barrero2020} or the average surface brightness within $r_e$ to define UDGs \citep[e.g.,][]{Koda2015,Yagi2016,vdBurg2016,Leisman2017,Martin2019}, and the size criterion also varies from $>1$ kpc to $>1.5$ kpc. \citet{vanNest2022} explore these definitions and find that different choice of UDG could drastically affect which subset of dwarfs are selected, therefore affect our understanding of the UDG population.
 
-Also append the catalog.
+The measured central surface brightness might be biased by nuclear star clusters \citep{Neumayer2020} or other contaminants. Therefore in this work, we use the average surface brightness within effective radius $\sbeff$ to define UDG. The difference between the average surface brightness and the central surface brightness for \sersic{} profile can be analytically calculated, where $\overline{\mu}_{\mathrm{eff}} - \mu_0 = 1.124$ for $n=1$ and 0.796 for $n=0.8$. Since dwarf galaxies and UDGs typically has \sersic{} index in a range of $0.8 < n < 1.2$ \citep{vanDokkum2015,ELVES-I}, we take $\overline{\mu}_{\mathrm{eff}} - \mu_0 = 1$ as an average value. In this work, we define UDGs to be galaxies with $r_e+\sigma(r_e) > 1.5$ kpc and $\sbeff + \sigma(\sbeff) > 25\ \sbunit$, which takes the measurement errors into account. This definition maximizes the consistency with the definition in \citet{vanDokkum2015} while not losing UDGs harboring nuclear star clusters.
 
-Plot the UDG and UPG population on the re-abs mag plane (Bovy book)
+Among the 2510 LSBG candidates, there are 459 objects satisfying the UDG definition. We did a final visual inspection for these objects and excluded 16 objects that are very likely to be false positives. We also removed another 8 objects having completeness less than 0.1. In the end, we obtain our UDG sample with 435 objects. The UDG catalog is available and shown in Table \ref{tab:catalog}. 
+
+\vspace{1em}
+
+The concept of UDG was proposed for those dwarf galaxies with large physical size and diffuse light distribution. However, the size of a galaxy is strongly correlated with its mass, as known as the mass-size relation \citep[e.g.,][]{Lange2015}. The slope of the mass-size relation has been shown to be color-dependent for galaxies above $M_\star > 10^{8.5}\ M_\odot$: blue star-forming galaxies have a shallower slope, whereas red quenched galaxies have a steeper slope. However, recent works show that the mass-size relation in the dwarf galaxy regime ($10^{5.5} < M_\star < 10^{8.5}$) is quite universal: the slope and intercept are not sensitive to the color and morphology of dwarf galaxy \citep{ELVES-I}. This gives us a chance to define a subset of dwarf galaxies that are outliers on the mass-size plane. Taking the measured mass-size relation from \citet{ELVES-I} $\log\, (r_e/\mathrm{pc}) = 0.247\, \log\, (M_\star/M_\odot) + 1.071$ and a scatter of $\sigma=0.181$ dex, we define a population of ultra-puffy galaxies (UPGs) to be galaxies that are $>1.5\sigma$ above the mass-size relation. The UPGs are not necessarily large in physical size or faint in average surface brightness. Both UDG and UPG represent subsets of dwarf galaxies that are larger and diffuser than average. However, the hard cut on size (1.5 kpc) makes UDG losing ``large'' galaxies at the low-mass end because as mass goes smaller, the average size also gets smaller. The surface brightness cut of UDG also biases the UDG sample in color distribution and further bias the quenched fraction, as will be discussed in Section \ref{sec:quench}. The definition of UPG based on the observed mass-size relation is more physics-motivated, and UPG better represents a homogeneous subset of dwarf galaxies along the stellar mass axis. There is also no color preference in the UPG definition for a given stellar mass. It is worth noticing that definition based on mass-size relation was already used in simulation studies where simulations cannot reproduce the observed mass-size relation \citep[e.g.,][]{Benavides2021}.
+
+There are 392 objects in our LSBG candidates satisfying that they are $1.5\sigma$ above the ridge line of the mass-size relation. After visual inspection and removing objects with completeness less than 0.1, we have 363 galaxies in our UPG sample. The distribution of the UDG and UPG sample on the size-surface brightness plane are shown in Figure \ref{fig:udg_upg_re_mu}. The galaxies are split into two color bins and are shown in blue ($g-i < 0.8$) and red ($g-i > 0.8$), respectively. Two marginal plots show the unnormalized histograms of galaxies in the two color bins. The numbers of red and blue galaxies are similar in the UDG sample, but there are more blue galaxies than red ones in the UPG sample. Since there is no hard surface brightness cut, the UPG sample includes a lot of blue galaxies with higher surface brightness ($\sbeff < 25$). The UPG sample also lose a significant fraction of red galaxies at $25 < \sbeff < 26$, because they are not LSB (hence low-mass) enough to be higher than $1.5\sigma$ from the mass-size relation.
 
 \begin{figure*}
 	\vbox{ 
 		\centering
 		\includegraphics[width=1\linewidth]{udg_upg_sample.pdf}
 	}
-    \caption{Caption}
+    \caption{The distribution of galaxies in the ultra-diffuse galaxy (UDG) sample (\textit{left}) and the ultra-puffy galaxy (UPG) sample (\textit{right}). The UDGs are galaxies with $r_e>1.5$ kpc and $\sbeff > 25.0\sbunit$. The UPGs is defined to be $1.5\sigma$ above the mass-size relation in \citet{ELVES-I}. We split the samples into two color bins and show them in red ($g-i>0.8$) and blue ($g-i<0.8$). The marginal histograms are not normalized to highlight the relative number of red and blue galaxies. Compared with the UDG sample, the UPG sample includes blue galaxies with surface brightness higher than the UDG cut ($\sbeff < 25\ \sbunit$) and excludes red galaxies at $25 < \sbeff < 26\ \sbunit$.
+    }
     \label{fig:udg_upg_re_mu}
 \end{figure*}
+
+
+\vspace{1em}
+
+
+
+
+% Write about mass calculation, extinction correction, etc.
+We only corrected measured colors for Galactic extinction based on \citet{SFD1998,Schlafly2011}. 
+
+
+\subsection{Background contamination}
+
+
+\section{Results}
+
+Plot the UDG and UPG population on the re-abs mag plane (Bovy book)
+
+\citet{Trujillo2020}: define size based on surface mass density
+
+
+Also append the catalog.
+
+SBeff relation with SB0: Yagi, Graham
+
+
 
 
 \begin{figure*}
@@ -446,16 +480,37 @@ Plot the UDG and UPG population on the re-abs mag plane (Bovy book)
 
 \subsection{Spatial distribution}
 
-\subsection{Quenched fraction}
+\subsection{Quenched fraction}\label{sec:quench}
 
 \citep{Baxter2021}
+
+\citep{Akins2021}: quenched fraction and quenching timescale in DC Justice League simulation.\citep{Samuel2022}: quenched fraction of MW sats in FIRE-2.
+
 \begin{figure*}
 	\vbox{ 
 		\centering
-		\includegraphics[width=1\linewidth]{quenched_frac.pdf}
+		\includegraphics[width=1\linewidth]{mass_size_plane.pdf}
 	}
     \caption{Caption}
-    \label{fig:quenched_frac}
+    \label{fig:mass_size}
+\end{figure*}
+
+\begin{figure*}
+	\vbox{ 
+		\centering
+		\includegraphics[width=1\linewidth]{quenched_frac_dist2host.pdf}
+	}
+    \caption{Caption}
+    \label{fig:qfrac_dist2host}
+\end{figure*}
+
+\begin{figure*}
+	\vbox{ 
+		\centering
+		\includegraphics[width=1\linewidth]{quenched_frac_host_color.pdf}
+	}
+    \caption{Caption}
+    \label{fig:qfrac_host_color}
 \end{figure*}
 
 \section{Discussion and Conclusion}
@@ -567,12 +622,12 @@ ra                       & deg     & Right ascension (J2000) \\
 dec                      & deg     & Declination (J2000) \\
 $r_e$         & arcsec  & Circularized effective radius  \\
 $\sigma(r_e)$ & arcsec  & Uncertainty of $r_e$ \\
-$\overline{\mu}_{\mathrm{eff}}(g)$               & \sbunit & $g$-band average surface brightness within $r_e$ \\
-$\sigma(\overline{\mu}_{\mathrm{eff}}(g))$       & \sbunit & Uncertainty of $\overline{\mu}_{\mathrm{eff}}(g)$           \\
-$\overline{\mu}_{\mathrm{eff}}(r)$               & \sbunit & $r$-band average surface brightness within $r_e$ \\
-$\sigma(\overline{\mu}_{\mathrm{eff}}(r))$       & \sbunit & Uncertainty of $\overline{\mu}_{\mathrm{eff}}(r)$           \\
-$\overline{\mu}_{\mathrm{eff}}(i)$               & \sbunit & $i$-band average surface brightness within $r_e$ \\
-$\sigma(\overline{\mu}_{\mathrm{eff}}(i))$       & \sbunit & Uncertainty of $\overline{\mu}_{\mathrm{eff}}(i)$           \\
+$\overline{\mu}_{\mathrm{eff}}(g)$               & $\sbunit$ & $g$-band average surface brightness within $r_e$ \\
+$\sigma(\overline{\mu}_{\mathrm{eff}}(g))$       & $\sbunit$ & Uncertainty of $\overline{\mu}_{\mathrm{eff}}(g)$           \\
+$\overline{\mu}_{\mathrm{eff}}(r)$               & $\sbunit$ & $r$-band average surface brightness within $r_e$ \\
+$\sigma(\overline{\mu}_{\mathrm{eff}}(r))$       & $\sbunit$ & Uncertainty of $\overline{\mu}_{\mathrm{eff}}(r)$           \\
+$\overline{\mu}_{\mathrm{eff}}(i)$               & $\sbunit$ & $i$-band average surface brightness within $r_e$ \\
+$\sigma(\overline{\mu}_{\mathrm{eff}}(i))$       & $\sbunit$ & Uncertainty of $\overline{\mu}_{\mathrm{eff}}(i)$           \\
 $m_g$                    & mag     & $g$-band apparent magnitude     \\
 $\sigma(m_g)$            & mag     & Uncertainty of $m_g$            \\
 $m_r$                    & mag     & $r$-band apparent magnitude     \\
@@ -588,6 +643,8 @@ $\varepsilon$               &         & Ellipticity                     \\
 $A_g$                    & mag     & $g$-band Galactic extinction \\
 $A_r$                    & mag     & $r$-band Galactic extinction \\
 $A_i$                    & mag     & $i$-band Galactic extinction \\
+comp & & Completeness \\
+%Host information (ra, dec, Mstar, distance to host, Rvir, g-i) \\
 \hline\hline
 \end{tabular}
 \end{center}
@@ -598,6 +655,8 @@ extinction. We provide Galactic extinction corrections, which are derived from
 the \citet{Schlafly2011} recalibration of the \citet{SFD1998} dust maps. 
 }
 \end{table}
+
+Also add external link for fake UDG catalog, etc. 
 
 
 \end{CJK*}
