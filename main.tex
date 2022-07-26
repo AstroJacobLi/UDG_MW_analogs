@@ -162,6 +162,7 @@
 
 
 \section{Introduction} \label{sec:intro}
+MW satellites: \citep{Nashimoto2022}
 
 In this work, we use the circularized effective radius $r_{\rm eff}$, defined as the $r_{\rm eff} = r_{\rm eff, sma} \sqrt{b/a}$, where $r_{\rm eff, sma}$ is the effective radius along the semi-major axis of the aligned elliptical isophotes, and $b/a$ is the axis ratio of the isophotes.
 
@@ -363,6 +364,7 @@ For LSBGs in our sample, we apply corrections for the bias using the interpolate
 Besides, it is also important to characterize the measurement uncertainty. The measurement uncertainty consists of a statistical uncertainty which is determined by the shape of the likelihood (posterior) surface, and a systematic uncertainty which is related to various factors including sky subtraction, contamination effects, etc. Unlike other parametric modeling code such as \code{galfit} or \code{imfit}, \code{scarlet} does not explore the full likelihood (posterior) space but rather finds one optimal solution. Thus we cannot get a statistical error of the measured properties from \code{scarlet}. However, by comparing the recovered properties of mock galaxies with the truth, we can empirically estimate the measurement uncertainty without knowing the impact of each factor. Following the same way of calculating the bias, in each bin, we compute the standard deviation of the difference between the truth and the bias-corrected measurement, then we interpolate over the grid. The measurement errors are shown in Figure \ref{fig:meas_err} as contours. 
 
 
+%All satellite photometry is in the AB system and cor- rected for MW dust extinction using the E(B − V ) maps of Schlegel et al. (1998) recalibrated by Schlafly & Finkbeiner (2011). We take the solar g-band magni- tude to be Mg⊙ = 5.03 mag (Willmer 2018).
 
 TBD: re-think the way of computing the error, especially for $r_e$. 
 
@@ -404,45 +406,53 @@ The UDG population is usually defined based on the surface brightness and the ph
 
 The measured central surface brightness might be biased by nuclear star clusters \citep{Neumayer2020} or other contaminants. Therefore in this work, we use the average surface brightness within effective radius $\sbeff$ to define UDG. The difference between the average surface brightness and the central surface brightness for \sersic{} profile can be analytically calculated, where $\overline{\mu}_{\mathrm{eff}} - \mu_0 = 1.124$ for $n=1$ and 0.796 for $n=0.8$. Since dwarf galaxies and UDGs typically has \sersic{} index in a range of $0.8 < n < 1.2$ \citep{vanDokkum2015,ELVES-I}, we take $\overline{\mu}_{\mathrm{eff}} - \mu_0 = 1$ as an average value. In this work, we define UDGs to be galaxies with $r_e+\sigma(r_e) > 1.5$ kpc and $\sbeff + \sigma(\sbeff) > 25\ \sbunit$, which takes the measurement errors into account. This definition maximizes the consistency with the definition in \citet{vanDokkum2015} while not losing UDGs harboring nuclear star clusters.
 
-Among the 2510 LSBG candidates, there are 459 objects satisfying the UDG definition. We did a final visual inspection for these objects and excluded 16 objects that are very likely to be false positives. We also removed another 8 objects having completeness less than 0.1. In the end, we obtain our UDG sample with 435 objects. The UDG catalog is available and shown in Table \ref{tab:catalog}. 
+Among the 2510 LSBG candidates, there are 432 objects satisfying the UDG definition. We did a final visual inspection for these objects and excluded 16 objects that are very likely to be false positives. We also removed another 4 objects having completeness less than 0.1. In the end, we obtain our UDG sample with 412 objects, which are associated with 258 hosts. The total sky area occupied by UDG hosts (out to 1 $R_{\rm{vir}}$ is 32.71 deg$^{2}$. The UDG catalog is available \textbf{online} and the catalog format is shown in Table \ref{tab:catalog}. 
 
 \vspace{1em}
 
 The concept of UDG was proposed for those dwarf galaxies with large physical size and diffuse light distribution. However, the size of a galaxy is strongly correlated with its mass, as known as the mass-size relation \citep[e.g.,][]{Lange2015}. The slope of the mass-size relation has been shown to be color-dependent for galaxies above $M_\star > 10^{8.5}\ M_\odot$: blue star-forming galaxies have a shallower slope, whereas red quenched galaxies have a steeper slope. However, recent works show that the mass-size relation in the dwarf galaxy regime ($10^{5.5} < M_\star < 10^{8.5}$) is quite universal: the slope and intercept are not sensitive to the color and morphology of dwarf galaxy \citep{ELVES-I}. This gives us a chance to define a subset of dwarf galaxies that are outliers on the mass-size plane. Taking the measured mass-size relation from \citet{ELVES-I} $\log\, (r_e/\mathrm{pc}) = 0.247\, \log\, (M_\star/M_\odot) + 1.071$ and a scatter of $\sigma=0.181$ dex, we define a population of ultra-puffy galaxies (UPGs) to be galaxies that are $>1.5\sigma$ above the mass-size relation. The UPGs are not necessarily large in physical size or faint in average surface brightness. Both UDG and UPG represent subsets of dwarf galaxies that are larger and diffuser than average. However, the hard cut on size (1.5 kpc) makes UDG losing ``large'' galaxies at the low-mass end because as mass goes smaller, the average size also gets smaller. The surface brightness cut of UDG also biases the UDG sample in color distribution and further bias the quenched fraction, as will be discussed in Section \ref{sec:quench}. The definition of UPG based on the observed mass-size relation is more physics-motivated, and UPG better represents a homogeneous subset of dwarf galaxies along the stellar mass axis. There is also no color preference in the UPG definition for a given stellar mass. It is worth noticing that definition based on mass-size relation was already used in simulation studies where simulations cannot reproduce the observed mass-size relation \citep[e.g.,][]{Benavides2021}.
 
-There are 392 objects in our LSBG candidates satisfying that they are $1.5\sigma$ above the ridge line of the mass-size relation. After visual inspection and removing objects with completeness less than 0.1, we have 363 galaxies in our UPG sample. The distribution of the UDG and UPG sample on the size-surface brightness plane are shown in Figure \ref{fig:udg_upg_re_mu}. The galaxies are split into two color bins and are shown in blue ($g-i < 0.8$) and red ($g-i > 0.8$), respectively. Two marginal plots show the unnormalized histograms of galaxies in the two color bins. The numbers of red and blue galaxies are similar in the UDG sample, but there are more blue galaxies than red ones in the UPG sample. Since there is no hard surface brightness cut, the UPG sample includes a lot of blue galaxies with higher surface brightness ($\sbeff < 25$). The UPG sample also lose a significant fraction of red galaxies at $25 < \sbeff < 26$, because they are not LSB (hence low-mass) enough to be higher than $1.5\sigma$ from the mass-size relation.
+There are 362 objects in our LSBG candidates satisfying that they are $1.5\sigma$ above the ridge line of the mass-size relation. After visual inspection and removing objects with completeness less than 0.1, we have 337 galaxies in our UPG sample. These UPGs are associated with 239 hosts. The total sky area occupied by UPG hosts (out to 1 $R_{\rm{vir}}$ is 32.37 deg$^{2}$.
+
+
+The distribution of the UDG and UPG sample on the size-surface brightness plane are shown in Figure \ref{fig:udg_upg_re_mu}. The galaxies are split into two color bins and are shown in blue ($g-i < 0.8$) and red ($g-i > 0.8$), respectively. Two marginal plots show the unnormalized histograms of galaxies in the two color bins. The numbers of red and blue galaxies are similar in the UDG sample, but there are more blue galaxies than red ones in the UPG sample. Since there is no hard surface brightness cut, the UPG sample includes a lot of blue galaxies with higher surface brightness ($\sbeff < 25$). The UPG sample also lose a significant fraction of red galaxies at $25 < \sbeff < 26$, because they are not LSB (hence low-mass) enough to be higher than $1.5\sigma$ from the mass-size relation.
 
 \begin{figure*}
 	\vbox{ 
 		\centering
 		\includegraphics[width=1\linewidth]{udg_upg_sample.pdf}
 	}
-    \caption{The distribution of galaxies in the ultra-diffuse galaxy (UDG) sample (\textit{left}) and the ultra-puffy galaxy (UPG) sample (\textit{right}). The UDGs are galaxies with $r_e>1.5$ kpc and $\sbeff > 25.0\sbunit$. The UPGs is defined to be $1.5\sigma$ above the mass-size relation in \citet{ELVES-I}. We split the samples into two color bins and show them in red ($g-i>0.8$) and blue ($g-i<0.8$). The marginal histograms are not normalized to highlight the relative number of red and blue galaxies. Compared with the UDG sample, the UPG sample includes blue galaxies with surface brightness higher than the UDG cut ($\sbeff < 25\ \sbunit$) and excludes red galaxies at $25 < \sbeff < 26\ \sbunit$.
+    \caption{The distribution of galaxies in the ultra-diffuse galaxy (UDG) sample (\textit{left}) and the ultra-puffy galaxy (UPG) sample (\textit{right}). The UDGs are galaxies with $r_e>1.5$ kpc and $\sbeff > 25.0\ \sbunit$. The UPGs is defined to be $1.5\sigma$ above the mass-size relation in \citet{ELVES-I}. We split the samples into two color bins and show them in red ($g-i>0.8$) and blue ($g-i<0.8$). The marginal histograms are not normalized to highlight the relative number of red and blue galaxies. Compared with the UDG sample, the UPG sample includes blue galaxies with surface brightness higher than the UDG cut ($\sbeff < 25\ \sbunit$) and excludes red galaxies at $25 < \sbeff < 26\ \sbunit$.
     }
     \label{fig:udg_upg_re_mu}
 \end{figure*}
 
-
-\vspace{1em}
-
-
-
-
-% Write about mass calculation, extinction correction, etc.
-We only corrected measured colors for Galactic extinction based on \citet{SFD1998,Schlafly2011}. 
+We derive the stellar masses of galaxies in the UDG and UPG sample from the Spergel model fitting and a color-$M_{\star}/L$ relation from \citet{Into2013}:
+\begin{align*}
+&\log \left(M_{\star} / L_{g}\right)=1.774\,(g-r)-0.783, \\
+&\log \left(M_{\star} / L_{g}\right)=1.297\,(g-i)-0.855.
+\end{align*}
+Because we have both $g-r$ and $g-i$ color available from the model fitting, we use the average of the $M_{\star}/L$ derived from the two colors for calculating stellar mass. We assume the solar absolute magnitude in $g$-band to be 5.03 \citep{Willmer2018}. We corrected for the effect of Galactic extinction on colors based on \citet{SFD1998,Schlafly2011}. The magnitudes and surface brightnesses are also extinction-corrected. 
 
 
-\subsection{Background contamination}
+\subsection{Background contamination}\label{sec:bkg}
+The major weakness of LSBG searches in photometric data is that distance information is typically unknown. Although we have matched LSBGs to MW analogs with known redshifts, the affiliation of LSBGs to the host is still not guaranteed. As a result, a certain fraction of galaxies in our UDG and UPG sample might just be foreground or background galaxies that fall within the virial radius of the host by projection. Given the volume probed by our search, contamination is more probable to be dominated by background galaxies. We estimate the fraction of contamination as follows.
+
+We selected a patch of sky with 24 deg$^{2}$ in HSC S18A. Then we performed the same deblending and modeling steps for 2707 LSBGs detected in this region. \footnote{The sky region is randomly selected, and these LSBGs share the same properties with our initial LSBG sample described in Section \ref{sec:match}.} We also removed objects that are already in our UDG sample, and we did visual inspection to further remove spurious objects. In the end, there are 480 LSBGs representing a population of possible contaminants in our UDG sample. Next, because the UDG is defined based on a physical size, we randomly associate the 483 LSBGs to the hosts of galaxies in our UDG sample. Then we calculate a physical radius for each LSBG and classify an LSBG as a ``fake`` UDG if it satisfies the definition. We repeat the random matching for 200 times, and we obtain 11,458 fake UDGs. In this way, the number density of fake UDGs is estimated to be $S_{\rm UDG} = 1.94\pm0.03\ \mathrm{deg}^{-2}$. In the same way, we get 11,867 fake UPGs in 200 random matches, and the estimated number density of fake UPGs is $S_{\rm UPG} = 2.12\pm0.03\ \mathrm{deg}^{-2}$. We use these number density to calculate the fraction of contamination in Section \ref{sec:n_udg}. The catalogs of fake UDG and UPGs are also available publicly\footnote{\url{xxxxx}}.
 
 
 \section{Results}
+
+\subsection{Number of UDG (UPG)}\label{sec:n_udg}
+
+
+ELVES: g-V correction
 
 Plot the UDG and UPG population on the re-abs mag plane (Bovy book)
 
 \citet{Trujillo2020}: define size based on surface mass density
 
 
-Also append the catalog.
 
 SBeff relation with SB0: Yagi, Graham
 
@@ -486,6 +496,8 @@ SBeff relation with SB0: Yagi, Graham
 
 \citep{Akins2021}: quenched fraction and quenching timescale in DC Justice League simulation.\citep{Samuel2022}: quenched fraction of MW sats in FIRE-2.
 
+When discussing the quenched fraction, also mention that we are uncertain about the mass-size above 8.5 and below 9-ish? 
+
 \begin{figure*}
 	\vbox{ 
 		\centering
@@ -520,16 +532,13 @@ Scenarios:
 2. accreting field UDGs, and quench them due to ram pressure stripping. But how long do accreted UDGs last before being destroyed? Need to look at ram pressure stripping literature.
 
 Homework:
-1. 1.5-sigma definition, UPG
-2. number of UDG per host, as a function of host mass bins.
 3. Move the stellar mass bin definition, try to match with red/blue, spiral/elliptical plot. If cannot match, does this hint the formation scenarios?
 4. How significant do we detect blue UDGs? 
 5. Split into redshift bins
 
 
 TODO:
-1. rerun the matching, compensate the left ~1000 LSBGs.
-2. galactic extinction. Done!!!
+2. galactic extinction.
 
 UDG rejuvenate after ram pressure stripping?
 
@@ -604,7 +613,7 @@ vdB 16 doesn't consider whether GALFIT gives the corrrect $R_e$, when deriving t
 Remember to ref SMUDGES papers here.
 
 
-\section{Catalog}
+\section{UDG and UPG Catalogs}
 \onecolumngrid 
 
 \begin{table}
@@ -635,23 +644,32 @@ $\sigma(m_r)$            & mag     & Uncertainty of $m_r$            \\
 $m_i$                    & mag     & $i$-band apparent magnitude     \\
 $\sigma(m_i)$            & mag     & Uncertainty of $m_i$            \\
 $g-r$                    & mag     & $g-r$ color                     \\
-$\sigma(g-r)$           & mag     & Uncertainty of $g-r$ color      \\
+$\sigma(g-r)$            & mag     & Uncertainty of $g-r$ color      \\
 $g-i$                    & mag     & $g-i$ color                     \\
-$\sigma(g-i)$           & mag     & Uncertainty of $g-i$ color      \\
+$\sigma(g-i)$            & mag     & Uncertainty of $g-i$ color      \\
 $\nu$                    &         & Spergel index              \\
-$\varepsilon$               &         & Ellipticity                     \\
+$\varepsilon$            &         & Ellipticity                     \\
 $A_g$                    & mag     & $g$-band Galactic extinction \\
 $A_r$                    & mag     & $r$-band Galactic extinction \\
 $A_i$                    & mag     & $i$-band Galactic extinction \\
+$\log\ M_\star$ & $M_\odot$ & Stellar mass of UDG (UPG) \\
 comp & & Completeness \\
-%Host information (ra, dec, Mstar, distance to host, Rvir, g-i) \\
+weight & & Color-dependent weight (see Section \ref{sec:bkg}) \\
+host\_name & & Name of the host galaxy \\
+host\_ra & & Right ascension (J2000) of the host galaxy \\
+host\_dec & & Declination (J2000) of the host galaxy \\
+host\_log\_m\_star & $M_\odot$ & Host stellar mass\\
+host\_r\_vir & kpc & Virial radius of the host galaxy \\
+host\_g\_i & mag & $g-i$ color of the host galaxy \\
+host\_z &  & Redshift of the hsot galaxy \\
+sep\_to\_host & deg & Angular separation between the host and UDG (UPG)\\
 \hline\hline
 \end{tabular}
 \end{center}
 \tablecomments{
 These tables are published in their entirety in machine-readable format.
 Magnitudes are on the AB system and have not been corrected for Galactic
-extinction. We provide Galactic extinction corrections, which are derived from
+extinction. The information of the host galaxies is from NASA-Sloan Atlas. We provide Galactic extinction corrections, which are derived from
 the \citet{Schlafly2011} recalibration of the \citet{SFD1998} dust maps. 
 }
 \end{table}
