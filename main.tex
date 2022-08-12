@@ -70,6 +70,8 @@
 % \newcommand{\sbunit}{mag~arcsec$^{-2}$}
 \newcommand{\sbunit}{\mathrm{mag\ arcsec}^{-2}}
 \newcommand{\sbeff}{\overline{\mu}_{\mathrm{eff}}(g)}
+\newcommand{\jiaxuan}[1]{\textcolor{orange}{\textbf{Jiaxuan: #1}}}
+
 
 \newcommand{\code}[1]{\textbf{\texttt{#1}}}
 \newcommand{\sersic}{S\'ersic}
@@ -162,6 +164,16 @@
 
 
 \section{Introduction} \label{sec:intro}
+
+Since the discovery of ultra-diffuse galaxies (UDGs, defined to have $r_e > 1.5$ kpc and $\mu(g,0)>24.0\ \mathrm{mag\ arcsec^{-2}}$) in the Coma cluster \citep{vanDokkum2015}, there have been a variety of studies for these extreme systems ranging from their dark matter content (van Dokkum et al. 2018) to their globular cluster populations (Danieli et al. 2022). A central question related to UDGs is what physical mechanisms are responsible for their formation. Before we can answer this question, it is important to reliably determine in what environment they live.
+Past UDG studies focused on rich galaxy groups and clusters (e.g., Yagi et al. 2016, Zatrisky et al. 2019), which provides distance information. Although UDGs are also found in field environments (Prole et al. 2019, Tanoglidis et al. 2021, Kadowaki et al. 2021), most studies of field UDGs lack distances and thus are statistical in nature. UDGs in groups and clusters are red and quenched; their blue counterparts are typically found in field environments (for some exceptions see Rom\'{a}n et al. 2019, Prole et al. 2019). This suggests that environment plays a crucial role in the formation and quenching of UDGs. Tidal effects and ram-pressure stripping explains the high quenched fraction in clusters and groups, but it is unclear whether field UDGs quench because of internal processes (feedback) and/or external processes (as splashback satellites, Benavides et al. 2021). It is also unclear whether UDGs belong to a special class of galaxy or are just a natural extension of dwarf systems to the lower surface brightness end. A larger UDG sample, especially in low-density environments, is needed to test these hypotheses.
+
+The best knowledge we have about dwarf galaxies at the very faint end was derived from systems in the Local Volume (e.g., Simon 2019, Carlsten et al. 2021). To better compare UDGs with other dwarf systems, we turned to looking for UDGs in the vicinity of Milky Way analogs at $0.01 < z < 0.04$. Until now, there are only $\sim 10$ confirmed UDGs associated with MW analogs (Cohen et al. 2018, Mao et al. 2021). The occurrence rate of UDGs in these low-density environments is unknown, and whether UDGs are quenched in such a regime has not been explored. With a sample of UDGs around MW-like hosts, we can compare the structural parameters, quenched fractions, nucleation fractions, and radial distributions with normal satellites in the nearby universe \citep[e.g.,][]{SAGA-II,CarlstenELVES2022}, to shed light on questions about the formation and evolution of the UDGs.
+
+
+Continuing the work by \citep{Greco2018}, we conducted a systematic search for low surface brightness galaxies (LSBGs) in Hyper Suprime-Cam survey (HSC) imaging data (Li et al., in prep). In order to study the formation and evolution of UDGs in low-density environments, we first select host galaxies at $0.01 < z < 0.04$ with Milky-Way masses ($10.2 < \log M_*/M_\odot < 11.2$) in the NASA-Sloan Atlas. We matched our HSC LSBGs catalog with the MW-like hosts catalog. We assign an LSBG to a host if their angular separation is smaller than the projected virial radius of the host. Then we select a UDG sample by requiring the $g$-band average surface brightness within the effective radius\footnote{This surface brightness threshold is equivalent to $\mu_0(g) > 24.0\ \mathrm{mag\ arcsec^{-2}}$ (van Dokkum et al. 2015) for S\'{e}rsic model with $n=1$.} $\overline{\mu_e} > 24.4\ \mathrm{mag\ arcsec^{-2}}$ and effective radius $R_e > 1.5$ kpc, under the assumption that all matched LSBGs are physically associated with the hosts. Following these steps, we have identified $\sim$ 250 UDG candidates to be associated with Milky Way-like hosts in projection. They span a wide range of surface brightness, size, color, nucleation, and host properties, making this sample ideal for studying UDG spatial distributions, quenched fractions, mass-size relations, nucleation fractions, and their dependence on host properties.
+
+
 MW satellites: \citep{Nashimoto2022}
 
 In this work, we use the circularized effective radius $r_{\rm eff}$, defined as the $r_{\rm eff} = r_{\rm eff, sma} \sqrt{b/a}$, where $r_{\rm eff, sma}$ is the effective radius along the semi-major axis of the aligned elliptical isophotes, and $b/a$ is the axis ratio of the isophotes.
@@ -404,7 +416,7 @@ After applying the stellar mass and redshift cuts to the NSA catalog, there are 
 \subsection{UDG and UPG sample}\label{sec:sample}
 The UDG population is usually defined based on the surface brightness and the physical size of the galaxy. However, there are many different criteria in literature: \citep{vanDokkum2015} define UDGs to have effective radius $r_e$ larger than 1.5 kpc and central surface brightness $\mu_0(g)$ fainter than $24.0\ \sbunit$; other groups also use the surface brightness at $r_e$ \citep[e.g.,][]{DiCintio2017,Cardona-Barrero2020} or the average surface brightness within $r_e$ to define UDGs \citep[e.g.,][]{Koda2015,Yagi2016,vdBurg2016,Leisman2017,Martin2019}, and the size criterion also varies from $>1$ kpc to $>1.5$ kpc. \citet{vanNest2022} explore these definitions and find that different choice of UDG could drastically affect which subset of dwarfs are selected, therefore affect our understanding of the UDG population.
 
-The measured central surface brightness might be biased by nuclear star clusters \citep{Neumayer2020} or other contaminants. Therefore in this work, we use the average surface brightness within effective radius $\sbeff$ to define UDG. The difference between the average surface brightness and the central surface brightness for \sersic{} profile can be analytically calculated, where $\overline{\mu}_{\mathrm{eff}} - \mu_0 = 1.124$ for $n=1$ and 0.796 for $n=0.8$. Since dwarf galaxies and UDGs typically has \sersic{} index in a range of $0.8 < n < 1.2$ \citep{vanDokkum2015,ELVES-I}, we take $\overline{\mu}_{\mathrm{eff}} - \mu_0 = 1$ as an average value. In this work, we define UDGs to be galaxies with $r_e+\sigma(r_e) > 1.5$ kpc and $\sbeff + \sigma(\sbeff) > 25\ \sbunit$, which takes the measurement errors into account. This definition maximizes the consistency with the definition in \citet{vanDokkum2015} while not losing UDGs harboring nuclear star clusters.
+The measured central surface brightness might be biased by nuclear star clusters \citep{Neumayer2020} or other contaminants. Therefore in this work, we use the average surface brightness within effective radius $\sbeff$ to define UDG. The difference between the average surface brightness and the central surface brightness for \sersic{} profile can be analytically calculated, where $\overline{\mu}_{\mathrm{eff}} - \mu_0 = 1.124$ for $n=1$ and 0.796 for $n=0.8$ \citep{Graham2005,Yagi2016}. Since dwarf galaxies and UDGs typically has \sersic{} index in a range of $0.8 < n < 1.2$ \citep{vanDokkum2015,ELVES-I}, we take $\overline{\mu}_{\mathrm{eff}} - \mu_0 = 1$ as an average value. In this work, we define UDGs to be galaxies with $r_e+\sigma(r_e) > 1.5$ kpc and $\sbeff + \sigma(\sbeff) > 25\ \sbunit$, which takes the measurement errors into account. This definition maximizes the consistency with the definition in \citet{vanDokkum2015} while not losing UDGs harboring nuclear star clusters.
 
 Among the 2510 LSBG candidates, there are 432 objects satisfying the UDG definition. We did a final visual inspection for these objects and excluded 16 objects that are very likely to be false positives. We also removed another 4 objects having completeness less than 0.1. In the end, we obtain our UDG sample with 412 objects, which are associated with 258 hosts. The total sky area occupied by UDG hosts (out to 1 $R_{\rm{vir}}$ is 32.71 deg$^{2}$. The UDG catalog is available \textbf{online} and the catalog format is shown in Table \ref{tab:catalog}. 
 
@@ -412,7 +424,7 @@ Among the 2510 LSBG candidates, there are 432 objects satisfying the UDG definit
 
 The concept of UDG was proposed for those dwarf galaxies with large physical size and diffuse light distribution. However, the size of a galaxy is strongly correlated with its mass, as known as the mass-size relation \citep[e.g.,][]{Lange2015}. The slope of the mass-size relation has been shown to be color-dependent for galaxies above $M_\star > 10^{8.5}\ M_\odot$: blue star-forming galaxies have a shallower slope, whereas red quenched galaxies have a steeper slope. However, recent works show that the mass-size relation in the dwarf galaxy regime ($10^{5.5} < M_\star < 10^{8.5}$) is quite universal: the slope and intercept are not sensitive to the color and morphology of dwarf galaxy \citep{ELVES-I}. This gives us a chance to define a subset of dwarf galaxies that are outliers on the mass-size plane. Taking the measured mass-size relation from \citet{ELVES-I} $\log\, (r_e/\mathrm{pc}) = 0.247\, \log\, (M_\star/M_\odot) + 1.071$ and a scatter of $\sigma=0.181$ dex, we define a population of ultra-puffy galaxies (UPGs) to be galaxies that are $>1.5\sigma$ above the mass-size relation. The UPGs are not necessarily large in physical size or faint in average surface brightness. Both UDG and UPG represent subsets of dwarf galaxies that are larger and diffuser than average. However, the hard cut on size (1.5 kpc) makes UDG losing ``large'' galaxies at the low-mass end because as mass goes smaller, the average size also gets smaller. The surface brightness cut of UDG also biases the UDG sample in color distribution and further bias the quenched fraction, as will be discussed in Section \ref{sec:quench}. The definition of UPG based on the observed mass-size relation is more physics-motivated, and UPG better represents a homogeneous subset of dwarf galaxies along the stellar mass axis. There is also no color preference in the UPG definition for a given stellar mass. It is worth noticing that definition based on mass-size relation was already used in simulation studies where simulations cannot reproduce the observed mass-size relation \citep[e.g.,][]{Benavides2021}.
 
-There are 362 objects in our LSBG candidates satisfying that they are $1.5\sigma$ above the ridge line of the mass-size relation. After visual inspection and removing objects with completeness less than 0.1, we have 337 galaxies in our UPG sample. These UPGs are associated with 239 hosts. The total sky area occupied by UPG hosts (out to 1 $R_{\rm{vir}}$ is 32.37 deg$^{2}$.
+There are 362 objects in our LSBG candidates satisfying that they are $1.5\sigma$ above the ridge line of the mass-size relation. After visual inspection and removing objects with completeness less than 0.1, we have 337 galaxies in our UPG sample. These UPGs are associated with 239 hosts. The total sky area occupied by UPG hosts (out to 1 $R_{\rm{vir}}$) is 32.37 deg$^{2}$.
 
 
 The distribution of the UDG and UPG sample on the size-surface brightness plane are shown in Figure \ref{fig:udg_upg_re_mu}. The galaxies are split into two color bins and are shown in blue ($g-i < 0.8$) and red ($g-i > 0.8$), respectively. Two marginal plots show the unnormalized histograms of galaxies in the two color bins. The numbers of red and blue galaxies are similar in the UDG sample, but there are more blue galaxies than red ones in the UPG sample. Since there is no hard surface brightness cut, the UPG sample includes a lot of blue galaxies with higher surface brightness ($\sbeff < 25$). The UPG sample also lose a significant fraction of red galaxies at $25 < \sbeff < 26$, because they are not LSB (hence low-mass) enough to be higher than $1.5\sigma$ from the mass-size relation.
@@ -438,27 +450,43 @@ Because we have both $g-r$ and $g-i$ color available from the model fitting, we 
 \subsection{Background contamination}\label{sec:bkg}
 The major weakness of LSBG searches in photometric data is that distance information is typically unknown. Although we have matched LSBGs to MW analogs with known redshifts, the affiliation of LSBGs to the host is still not guaranteed. As a result, a certain fraction of galaxies in our UDG and UPG sample might just be foreground or background galaxies that fall within the virial radius of the host by projection. Given the volume probed by our search, contamination is more probable to be dominated by background galaxies. We estimate the fraction of contamination as follows.
 
-We selected a patch of sky with 24 deg$^{2}$ in HSC S18A. Then we performed the same deblending and modeling steps for 2707 LSBGs detected in this region. \footnote{The sky region is randomly selected, and these LSBGs share the same properties with our initial LSBG sample described in Section \ref{sec:match}.} We also removed objects that are already in our UDG sample, and we did visual inspection to further remove spurious objects. In the end, there are 480 LSBGs representing a population of possible contaminants in our UDG sample. Next, because the UDG is defined based on a physical size, we randomly associate the 483 LSBGs to the hosts of galaxies in our UDG sample. Then we calculate a physical radius for each LSBG and classify an LSBG as a ``fake`` UDG if it satisfies the definition. We repeat the random matching for 200 times, and we obtain 11,458 fake UDGs. In this way, the number density of fake UDGs is estimated to be $S_{\rm UDG} = 1.94\pm0.03\ \mathrm{deg}^{-2}$. In the same way, we get 11,867 fake UPGs in 200 random matches, and the estimated number density of fake UPGs is $S_{\rm UPG} = 2.12\pm0.03\ \mathrm{deg}^{-2}$. We use these number density to calculate the fraction of contamination in Section \ref{sec:n_udg}. The catalogs of fake UDG and UPGs are also available publicly\footnote{\url{xxxxx}}.
+We selected a patch of sky with 24 deg$^{2}$ in HSC S18A. Then we performed the same deblending and modeling steps for 2707 LSBGs detected in this region. \footnote{The sky region is randomly selected, and these LSBGs share the same properties with our initial LSBG sample described in Section \ref{sec:match}.} We also removed objects that are already in our UDG sample, and we did visual inspection to further remove spurious objects. In the end, there are 480 LSBGs representing a population of possible contaminants in our UDG sample. Next, because the UDG is defined based on a physical size, we randomly associate the 483 LSBGs to the hosts of galaxies in our UDG sample. Then we calculate a physical radius for each LSBG and classify an LSBG as a ``fake`` UDG if it satisfies the definition. We repeat the random matching for 200 times, and we obtain 11,458 fake UDGs. In this way, the number density of fake UDGs is estimated to be $S_{\rm UDG} = 1.94\pm0.03\ \mathrm{deg}^{-2}$. In the same way, we get 11,867 fake UPGs in 200 random matches, and the estimated number density of fake UPGs is $S_{\rm UPG} = 2.12\pm0.03\ \mathrm{deg}^{-2}$. The catalogs of fake UDG and UPGs are also available publicly\footnote{\url{https://zenodo.org/}}.
+
+Using the number densities and the probed area of our survey, we calculate the fraction of contamination for both UDG and UPG sample. For the UDG sample, there are $f_{\rm contam} \approx 16\%$ contaminants; for the UPG sample, the contamination fraction is $f_{\rm contam} \approx 20\%$. We take the contamination fraction into account when calculating the average UDG (UPG) number in Section \ref{sec:results}. 
+
+One of the main goals of this paper is to study the star formation status of UDGs and UPGs in MW analogs. The star formation rate of galaxies is indicated by broad-band colors, and we use color to calculate the quenched fraction of UDGs and UPGs. However, background contaminants affect the color distribution of the UDG (UPG) sample, thus affect the calculated quenched fraction. If the fake UDGs (UPGs) span a different region from the true UDGs in the observable space, we can use these observables to assign weights to each object in our UDG sample indicating the possibility of being a true UDG. Indeed, we find that the $g-i$ color distribution of the fake UDG sample is bluer than that of the true UDG sample, which motivates us to assign an importance weights based on $g-i$ color. We first compute the normalized histograms of $g-i$ colors (denoted as $\lambda_k$ at $(g-i)_{k}$ bins) for both true UDG and fake UDG samples. Then we multiply $f_{\rm contam}$ with the histogram of fake UDG sample ($\lambda_k^{\rm fake}$) such that the histogram sums up to the average contamination fraction. The weights of UDGs in color bin $(g-i)_k$ is estimated to be $w_k = \max\,(1 - f_{\rm contam} \lambda_k^{\rm fake} / \lambda_k^{\rm true}, 0)$. This weight stands for a possibility of being a contaminant. The weights of UPGs are assigned following the same procedure. We find this color-based contamination subtraction scheme is sufficient for this work since the fraction of contamination is small. Our main results shown in Section \ref{sec:results} are robust against contamination subtraction. 
 
 
-\section{Results}
+\section{Results}\label{sec:results}
+In this section, we present statistical analysis of UDGs and UPGs associated with MW analogs in the nearby Universe. TLDR the full section here?
 
-\subsection{Number of UDG (UPG)}\label{sec:n_udg}
+\subsection{Abundance of UDGs and UPGs}\label{sec:n_udg}
+
+\begin{figure*}
+	\vbox{ 
+		\centering
+		\includegraphics[width=1\linewidth]{N_UDG_host_mass.pdf}
+	}
+    \caption{The abundance of UDGs as a function of host halo mass. \textit{Left}: We compile the UDG abundance measurements from literature covering a wide range of host mass. The UDG abundance of our work $N_{\rm UDG} = 0.76\pm 0.04$ is shown as red square, the power-law relation from \citet{vdBurg2017} is shown in gray, and our fitting result is shown in pink. Our UDG abundance is consistent with ELVES but significantly higher than that in SAGA. After including more measurements at the lower halo mass end, the power-law is shallower than the relation reported in \citet{vdBurg2017}. \textit{Right}: We split the UDG sample into bins based on the host halo mass (triangles) and $g-i$ color (pentagons). The UDG abundance is higher for more massive host and redder host. }
+    \label{fig:n_udg}
+\end{figure*}
+
+As demonstrated by many previous studies \citep[e.g.,][]{vdBurg2016,vdBurg2017}, the average number of UDGs per host scales with host halo mass. While many literature focus on finding UDGs in clusters and large groups, there are less constraints on the UDG abundance at the lower halo mass end. In this section, we calculate the UDG abundance of MW analogs, and compare with other surveys.
+
+We define the UDG abundance as the average number of UDGs per host galaxy. In our UDG sample, there are 412 UDGs associated with 258 hosts. After correcting for background contamination (see Section \ref{sec:bkg}) and completeness (see Section \ref{sec:completeness}), the UDG abundance of MW analogs is $N_{\rm UDG} = 0.76\pm 0.04$ per host. Here we neglect the fact that the number of satellites contained within the virial sphere is different from the number of satellite within a projected cylinder with virial radius (the so-called deprojection factor, \citealt{vdBurg2017}).
+
+We compare our UDG abundance with other surveys focused on MW analogs. In the SAGA survey \citep{SAGA-II}, 6 satellite galaxies (out of 127 spectroscopy-confirmed satellites around 36 MW analogs) satisfy the definition of UDG. Therefore the UDG fraction in \citet{SAGA-II} is about $N_{\rm UDG,\, SAGA} \approx 0.17\pm0.07$. In the ELVES survey \citep{CarlstenELVES2022}, there are 15 satellites (out of 404 satellites associated with 30 MW analogs) satisfying the UDG definition, leading to a UDG fraction of $N_{\rm UDG,\, ELVES} \approx 0.50\pm0.13$. \citet{Roman2017b} identified 11 UDGs around three galaxy groups in the IAC Stripe 82 Legacy Survey \citep{Fliri2016}. Since both SAGA and ELVES select satellites based on distance measurements and do not correct for completeness, their UDG abundances are interpreted as lower limits. \citet{Roman2017b} do not estimate the background contamination fraction and do not correct for completeness either. We plot the UDG abundances of these surveys in the left panel of Figure \ref{fig:n_udg}, together with the results for larger galaxy groups and clusters \citep{Koda2015,Munoz2015,Roman2017a,Roman2017b,Janssens2017,vdBurg2017}. Among these studies, only \citet{vdBurg2017} applied background subtraction and completeness correction to the raw counts. The power-law regression result from \citet{vdBurg2017} $N_{\rm UDG} \propto M_h^{1.11\pm 0.07}$ is shown in gray. The UDG abundance of this work is highlighted as the red square. As shown in Figure \ref{fig:n_udg}, the scatter of $N_{\rm UDG}-M_h$ relation get larger at the lower halo mass end. Our UDG abundance is similar to the value in ELVES survey, but is higher than the prediction from \citet{vdBurg2017} but is still considered consistent within scatter. The UDG abundances from SAGA is significantly lower than both ELVES and our result. This might be explained by different photometric depth of data used. SAGA selects dwarf candidates in DECaLS data, which is x mag shallower than the CFTH and HSC data used in ELVES and this work. It is probable that SAGA missed a significant fraction of red and lower surface brightness galaxies. 
+
+Taking all data points from literature (as shown in Figure \ref{fig:n_udg}), we use orthogonal distance regression (ODR) to fit a power-law between $N_{\rm UDG}$ and host halo mass $M_h$ and find $N_{\rm UDG} \propto M_h^{0.96\pm 0.04}$, shown as the pink dashed line in Figure \ref{fig:n_udg}. The slope of the power law is shallower than \citet{vdBurg2017} ($\beta=1.11\pm0.07$) but still steeper than \citet{Roman2017b} ($\beta=0.85\pm0.05$). Since most individual studies do not have a statistical estimation for background contamination and completeness, the UDG abundances for large groups should be interpreted as lower limits. If completeness is applied, it is possible that the slope $\beta$ will be steeper than what we are showing in Figure \ref{fig:n_udg}.
+
+In the right panel, we split the UDG sample into different bins based on their host halo mass (shown as triangles) and color (shown as pentagons). The UDG abundance is slightly higher for hosts with higher halo mass and redder color, but the trend is stronger on host color. 
 
 
-ELVES: g-V correction
+% Plot the UDG and UPG population on the re-abs mag plane (Bovy book)
+% \citet{Trujillo2020}: define size based on surface mass density
+% We correct for completeness after statistical contamination subtraction.
 
-Plot the UDG and UPG population on the re-abs mag plane (Bovy book)
-
-\citet{Trujillo2020}: define size based on surface mass density
-
-
-
-SBeff relation with SB0: Yagi, Graham
-
-
-
-
+\subsection{Size distribution}
 \begin{figure*}
 	\vbox{ 
 		\centering
@@ -467,6 +495,14 @@ SBeff relation with SB0: Yagi, Graham
     \caption{Caption}
     \label{fig:size_distribution}
 \end{figure*}
+
+The size distribution of UDGs is an important topic since it has been used to test various UDG formation scenario \citep[e.g.,][]{Amorisco2016,vdBurg2017}. In this section, we calculate the size distribution of our UDG and UPG sample. We split UDGs into 10 bins in $\log r_e$ with a bin width of 0.06 dex. Then we calculate the number of UDGs per bin . 
+
+
+We also take the measurement error in $r_e$ into account. 
+
+\subsection{Spatial distribution}
+
 
 
 \begin{figure*}
@@ -479,17 +515,6 @@ SBeff relation with SB0: Yagi, Graham
 \end{figure*}
 
 
-\begin{figure*}
-	\vbox{ 
-		\centering
-		\includegraphics[width=1\linewidth]{N_UDG_host_mass.pdf}
-	}
-    \caption{Caption}
-    \label{fig:n_udg}
-\end{figure*}
-
-\subsection{Spatial distribution}
-
 \subsection{Quenched fraction}\label{sec:quench}
 
 \citep{Baxter2021}
@@ -497,6 +522,10 @@ SBeff relation with SB0: Yagi, Graham
 \citep{Akins2021}: quenched fraction and quenching timescale in DC Justice League simulation.\citep{Samuel2022}: quenched fraction of MW sats in FIRE-2.
 
 When discussing the quenched fraction, also mention that we are uncertain about the mass-size above 8.5 and below 9-ish? 
+
+
+This also explains the low quenched fraction of SAGA \citep{CarlstenELVES2022}.
+
 
 \begin{figure*}
 	\vbox{ 
@@ -537,11 +566,7 @@ Homework:
 5. Split into redshift bins
 
 
-TODO:
-2. galactic extinction.
-
 UDG rejuvenate after ram pressure stripping?
-
 
 Why red is equivalent to quenched? Need to clarify in the paper
 
@@ -549,7 +574,7 @@ calculate probability of being a backsplash satellite (e.g., splashed to 1.5 Mpc
 
 Compare spatial distribution with normal dwarf? iF they are indeed high-spin tail of normal dwarfs. 
 
-
+Don't forget to discuss \citep{xSAGA-I}
 
 
 \section*{Acknowledgment}
@@ -557,6 +582,9 @@ JL is grateful for discussions with XXX. The authors thank Yao-Yuan Mao for his 
 
 The Hyper Suprime-Cam (HSC) collaboration includes the astronomical communities of Japan and Taiwan, and Princeton University. The HSC instrumentation and software were developed by National Astronomical Observatory of Japan (NAOJ), Kavli Institute for the Physics and Mathematics of the Universe (Kavli IPMU), University of Tokyo, High Energy Accelerator Research Organization (KEK), Academia Sinica Institute for Astronomy and Astrophysics in Taiwan (ASIAA) and Princeton University.  
 Funding was contributed by the FIRST program from Japanese Cabinet Office, Ministry of Education, Culture, Sports, Science and Technology (MEXT), Japan Society for the Promotion of Science (JSPS), Japan Science and Technology Agency (JST), Toray Science Foundation, NAOJ, Kavli IPMU, KEK, ASIAA and Princeton University.
+
+The authors are pleased to acknowledge that the work reported on in this paper was substantially performed using the Princeton Research Computing resources at Princeton University which is consortium of groups led by the Princeton Institute for Computational Science and Engineering (PICSciE) and Office of Information Technology's Research Computing.
+
 \vspace{1em}
 \software{\href{http://www.numpy.org}{\code{NumPy}} \citep{Numpy},
           \href{https://www.astropy.org/}{\code{Astropy}} \citep{astropy}, \href{https://www.scipy.org}{\code{SciPy}} \citep{scipy}, \href{https://matplotlib.org}{\code{Matplotlib}} \citep{matplotlib},
