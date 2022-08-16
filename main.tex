@@ -127,7 +127,10 @@
 \author[0000-0003-1385-7591]{Song Huang (黄崧)}
 \affiliation{Department of Astrophysical Sciences, 4 Ivy Lane, Princeton University, Princeton, NJ 08544, USA}
 \affiliation{Department of Astronomy and Tsinghua Center for Astrophysics, Tsinghua University, Beijing 100084, China}
-
+\author[0000-0002-8873-5065]{Peter Melchior}
+\affiliation{Department of Astrophysical Sciences, 4 Ivy Lane, Princeton University, Princeton, NJ 08544, USA}
+\author[0000-0002-2704-5028]{Remy Joseph}
+\affiliation{Department of Astrophysical Sciences, 4 Ivy Lane, Princeton University, Princeton, NJ 08544, USA}
 \author[0000-0002-1841-2252]{Rachael Beaton}
 \affiliation{Department of Astrophysical Sciences, 4 Ivy Lane, Princeton University, Princeton, NJ 08544, USA}
 \author[0000-0002-2991-9251]{Kirsten Casey}
@@ -136,11 +139,7 @@
 \affiliation{Department of Astrophysical Sciences, 4 Ivy Lane, Princeton University, Princeton, NJ 08544, USA}
 \author[0000-0002-1841-2252]{Andy Goulding}
 \affiliation{Department of Astrophysical Sciences, 4 Ivy Lane, Princeton University, Princeton, NJ 08544, USA}
-\author[0000-0002-2704-5028]{Remy Joseph}
-\affiliation{Department of Astrophysical Sciences, 4 Ivy Lane, Princeton University, Princeton, NJ 08544, USA}
 \author[0000-0002-1841-2252]{Erin Kado-Fong}
-\affiliation{Department of Astrophysical Sciences, 4 Ivy Lane, Princeton University, Princeton, NJ 08544, USA}
-\author[0000-0002-8873-5065]{Peter Melchior}
 \affiliation{Department of Astrophysical Sciences, 4 Ivy Lane, Princeton University, Princeton, NJ 08544, USA}
 
 %% Note that the \and command from previous versions of AASTeX is now
@@ -188,12 +187,12 @@ In this work, we use the \code{Wide} layer data from Public Data Release 2 (PDR2
 %HSC \code{S18A} also provides bitmasks indicating bad pixels, cosmic rays, edges of CCDs and pixels with source detection, helping us generate image masks when extracting surface brightness profiles (Section \ref{sec:hsc_methods}). In this paper, we use the \code{WIDE} layer data from \code{S18A} (\code{PDR2}). It covers $\sim 300$ deg$^2$ in all five bands. 
 
 \subsection{NASA-Sloan Atlas}
-We use the NASA-Sloan Atlas (NSA \footnote{\url{http://nsatlas.org}}, \citealt{Blanton2005,Blanton2011}) to select galaxies analogous to the Milky Way. NSA is a catalog of parameters of local galaxies derived from the Sloan Digital Sky Survey \citep[SDSS,][]{York2000}. We use the new version of NSA catalog (\code{v1\_0\_1}\footnote{\url{https://www.sdss.org/dr13/manga/manga-target-selection/nsa/}}) which contains about $640,000$ galaxies out to $z < 0.15$. It also includes elliptical Petrosian aperture photometry for galaxies, which is considered to be more reliable than the photometry used in older versions. In this paper, we use the stellar mass derived from the ellpitical Petrosian photometry using \code{kcorrect v4\_2}. The redshifts of galaxies in NSA come from several spectroscopic surveys, gas surveys, or direct distance measurements. 
+We use the NASA-Sloan Atlas (NSA \footnote{\url{http://nsatlas.org}}, \citealt{Blanton2005,Blanton2011}) to select galaxies analogous to the Milky Way. NSA is a catalog of parameters of local galaxies derived from the Sloan Digital Sky Survey \citep[SDSS,][]{York2000}. We use the new version of NSA catalog (\code{v1\_0\_1}\footnote{\url{https://www.sdss.org/dr13/manga/manga-target-selection/nsa/}}) which contains about $640,000$ galaxies out to $z < 0.15$. It also includes elliptical Petrosian aperture photometry for galaxies, which is considered to be more reliable than the photometry used in older versions. In this paper, we use the stellar mass derived from the elliptical Petrosian photometry using \code{kcorrect v4\_2}. The redshifts of galaxies in NSA come from several spectroscopic surveys, gas surveys, or direct distance measurements. 
 
 
 
 \section{LSBG search in HSC S18A}
-Given an overview of the steps here.
+Given an overview of the steps here. Also read SMUDGES paper and discuss some aspects here. 
 
 \subsection{Source Detection}\label{sec:detection}
 \citetalias{Greco2018} performed a search for extended LSBGs in the first $\sim 200$ deg$^2$ of HSC survey. We continued the work in \citetalias{Greco2018} and extended the search to HSC \code{S18A} data which covers $\sim 300\ \rm{deg}^{2}$ and has much better sky subtraction compared to \code{S16A}. We follow the same philosophy of source detection as in \citetalias{Greco2018}, but make several updates to accommodate \code{S18A} data. Below we summarize the main steps of the search and emphasize the updates made to improve the overall completeness and purity. We refer interested readers to \citetalias{Greco2018} for more details. Our source detection pipeline \code{hugs}\footnote{\url{https://github.com/johnnygreco/hugs}} is also publically available.
@@ -226,6 +225,8 @@ In vanilla scarlet, objects can be modeled with different types of sources, incl
 Vanilla scarlet is ideal to identify and remove the false positives in our intial LSBG sample. 
 
 We model LSBG candidates using vanilla scarlet as follows. 
+
+Our code \href{https://github.com/AstroJacobLi/kuaizi}{\code{kuaizi}} is also available on GitHub. 
 
 \subsubsection{Peak detection}
 We first generate cutout images with a size of $1\arcmin$ in $griz$-bands for each LSBG candiate. Then we construct a detection image by taking a weighted average of the images in four separate bands. We take the total inverse variance as the weight for each band. This detection image is considered to be deeper than any single band image. 
@@ -501,15 +502,6 @@ We find that the UDG size distribution roughly follows a power law. We fit a pow
 We also show the size distribution of UPGs in the right panel of Figure \ref{fig:size_distribution}. Unlike UDGs, we make the UPG sample by cutting through the 1.5$\sigma$ line above the mass-size relation. Therefore, for a given mass, many small UDGs are not in the UPG sample since their sizes are not extreme on the mass-size plane. As a consequence, the size distribution of UPG sample is suppressed at the smaller size end. 
 
 \subsection{Radial distribution}\label{sec:radial_distr}
-Since the discovery of UDGs in Coma cluster, the radial distribution of UDGs around the hosts has been a valuable tool to test various UDG formation theories (cite simulation papers). In \citet{vanDokkum2015}, UDGs are not found within 300 kpc from the cluster center, hinting that UDGs might not survive in such a dense environment. \citet{vdBurg2016} has also found that the number of UDGs is suppressed near the center of clusters, and the radial distribution of UDGs in cluster environments roughly follows a projected Einasto \citep{Einasto1965} profile. In the following, we derive the radial distribution of UDGs and UPGs in our sample and discuss possible implications.
-
-We calculate the radial distribution as follows. For each host, we count the number of UDGs in each radial bin scaled by $R_{\rm vir}$ and calculate the number density within each radial annulus. We subtract the contribution of background contaminants based on the background contamination density (Sec. \ref{sec:bkg}) and the angular area occupied by the host. Then we average over all hosts and correct for the completeness, as shown in Figure \ref{fig:radial_distribution}. Red squares are the number of UDGs (UPGs) per radial bin, and the error includes Poisson error, background subtraction error, and completeness error. The radial distributions of both UDGs and UPGs turn over around $R=0.2\,R_{\rm vir}$. It is known that the detection can be more incomplete as it gets closer to the host due to the blending between UDG and the host galaxy outskirts and possible sky subtraction issues. Although we have corrected the completeness for each object based on their size and surface brightness, it is still possible that our completeness does not include the dependence on the distance to the host. As we mentioned above, it is also possible that UDGs and UPGs are depleted because of strong tidal interactions. 
-
-We fit the radial distributions of UDG (UPG) with the projected NFW and Einasto profiles at $R > 0.2 R_{\rm vir}$. The Einasto profile introduces an extra ``shape'' parameter $\alpha$ and has been argued to be a better description to the dark matter halo profiles \citep[e.g.,][]{Navarro2004,Gao2008,Navarro2010,Dutton2014}. Einasto profile also makes concentration estimates less sensitive to the radial range fitted. The best-fit NFW and Einasto profiles are shown in Figure \ref{fig:radial_distribution} as blue and red lines, respectively. The best-fit Einasto profile from \citet{vdBurg2016} is shown as the dashed gray line.
-
-Compared with \citet{vdBurg2016}, there are more UDGs at smaller radial distances in our sample, thus the UDG radial distribution is more concentrated although we exclude $R < 0.2\ R_{\rm vir}$. Unlike \citet{vdBurg2016}, we find that both NFW and Einasto could describe the radial distribution of UDGs (UPGs) quite well. The concentration of the best-fit NFW profile is $c_{\rm NFW, UDG} = 10.1^{+6.5}_{-3.9}$ for UDGs and $c_{\rm NFW, UPG} = 10.9^{+8.9}_{-4.9}$ for UPGs. The best-fit Einasto profile has $\alpha_{\rm Ein, UDG} = 0.44^{+0.42}_{-0.22},\ c_{\rm Ein, UDG} = 3.30^{+2.07}_{-1.27}$ for UDGs and $\alpha_{\rm Ein, UPG} = 0.40^{+0.56}_{-0.23},\ c_{\rm Ein, UPG} = 3.55^{+3.63}_{-1.80}$ for UPGs. The radial distribution profiles of UDGs and UPGs are found to be very similar in shape. Our best-fit Einasto profiles have lower $\alpha$ and higher concentration compared with \citet{vdBurg2016} where $\alpha_{\rm Ein} = 0.92^{+0.08}_{-0.18},\ c_{\rm Ein} = 1.83^{+0.13}_{-0.12}$.
-
-According to the concentration-mass relation of dark matter halos, the concentration of MW-like halo is $c_{\rm NFW} \sim 10$ \citep{Bullock2001,Duffy2008,Dutton2014}. Therefore, if assuming an NFW profile, the UDGs and UPGs follow the underlying dark matter distribution of the host. However, the Einasto shape parameter for a MW-like halo is $\alpha\sim 0.15$ at $z=0$ and its concentration $c\sim 8-10$. \citep{Gao2008,Dutton2014}. Comparing with this, the best-fit Einasto profiles for UDG (UPG) radial distribution have larger shape parameter $\alpha$ and smaller concentration $c$. We notice that the errors of the best-fit parameters are large due to the sample size and also the fact that concentration is most sensitive to data at smaller radial distances which are excluded in the analysis. Therefore, the UDG (UPG) radial distribution can be considered consistent with the dark matter distribution of the host. Nevertheless, a larger and more complete sample is needed to better constrain the radial distributions. 
 
 \begin{figure*}
 	\vbox{ 
@@ -521,10 +513,37 @@ According to the concentration-mass relation of dark matter halos, the concentra
 \end{figure*}
 
 
+Since the discovery of UDGs in Coma cluster, the radial distribution of UDGs around the hosts has been a valuable tool to test various UDG formation theories (cite simulation papers). In \citet{vanDokkum2015}, UDGs are not found within 300 kpc from the cluster center, hinting that UDGs might not survive in such a dense environment. \citet{vdBurg2016} has also found that the number of UDGs is suppressed near the center of clusters, and the radial distribution of UDGs in cluster environments roughly follows a projected Einasto \citep{Einasto1965} profile. In the following, we derive the radial distribution of UDGs and UPGs in our sample and discuss possible implications.
+
+We calculate the radial distribution as follows. For each host, we count the number of UDGs in each radial bin scaled by $R_{\rm vir}$ and calculate the number density within each radial annulus. We subtract the contribution of background contaminants based on the background contamination density (Sec. \ref{sec:bkg}) and the angular area occupied by the host. Then we average over all hosts and correct for the completeness, as shown in Figure \ref{fig:radial_distribution}. Red squares are the number of UDGs (UPGs) per radial bin, and the error includes Poisson error, background subtraction error, and completeness error. The radial distributions of both UDGs and UPGs turn over around $R=0.2\,R_{\rm vir}$. It is known that the detection can be more incomplete as it gets closer to the host due to the blending between UDG and the host galaxy outskirts and possible sky subtraction issues. Although we have corrected the completeness for each object based on their size and surface brightness, it is still possible that our completeness does not include the dependence on the distance to the host. As we mentioned above, it is also possible that UDGs and UPGs are depleted because of strong tidal interactions. 
+
+We fit the radial distributions of UDG (UPG) with the projected NFW and Einasto profiles at $R > 0.2 R_{\rm vir}$. The Einasto profile introduces an extra ``shape'' parameter $\alpha$ and has been argued to be a better description to the dark matter halo profiles \citep[e.g.,][]{Navarro2004,Gao2008,Navarro2010,Dutton2014}. Einasto profile also makes concentration estimates less sensitive to the radial range fitted. The best-fit NFW and Einasto profiles are shown in Figure \ref{fig:radial_distribution} as blue and red lines, respectively. The best-fit Einasto profile from \citet{vdBurg2016} is shown as the dashed gray line.
+
+Compared with \citet{vdBurg2016}, there are more UDGs at smaller radial distances in our sample, thus the UDG radial distribution is more concentrated although we exclude $R < 0.2\ R_{\rm vir}$. Unlike \citet{vdBurg2016}, we find that both NFW and Einasto could describe the radial distribution of UDGs (UPGs) quite well. The concentration of the best-fit NFW profile is $c_{\rm NFW, UDG} = 10.1^{+6.5}_{-3.9}$ for UDGs and $c_{\rm NFW, UPG} = 10.9^{+8.9}_{-4.9}$ for UPGs. The best-fit Einasto profile has $\alpha_{\rm Ein, UDG} = 0.44^{+0.42}_{-0.22},\ c_{\rm Ein, UDG} = 3.30^{+2.07}_{-1.27}$ for UDGs and $\alpha_{\rm Ein, UPG} = 0.40^{+0.56}_{-0.23},\ c_{\rm Ein, UPG} = 3.55^{+3.63}_{-1.80}$ for UPGs. The radial distribution profiles of UDGs and UPGs are found to be very similar in shape. Our best-fit Einasto profiles have lower $\alpha$ and higher concentration compared with \citet{vdBurg2016} where $\alpha_{\rm Ein} = 0.92^{+0.08}_{-0.18},\ c_{\rm Ein} = 1.83^{+0.13}_{-0.12}$.
+
+According to the concentration-mass relation of dark matter halos, the concentration of MW-like halo is $c_{\rm NFW} \sim 10$ \citep{Bullock2001,Duffy2008,Dutton2014}. Therefore, if assuming an NFW profile, the UDGs and UPGs follow the underlying dark matter distribution of the host. However, the Einasto shape parameter for a MW-like halo is $\alpha\sim 0.15$ at $z=0$ and its concentration $c\sim 8-10$. \citep{Gao2008,Dutton2014}. Comparing with this, the best-fit Einasto profiles for UDG (UPG) radial distribution have larger shape parameter $\alpha$ and smaller concentration $c$. We notice that the errors of the best-fit parameters are large due to the sample size and also the fact that concentration is most sensitive to data at smaller radial distances which are excluded in the analysis. Therefore, the UDG (UPG) radial distribution is considered to be consistent with the dark matter distribution of the host at a $2\sigma$ level. Nevertheless, a larger and more complete sample is needed to better constrain the radial distributions. 
+
+
 \subsection{Quenched fraction}\label{sec:quench}
+
+\begin{figure*}
+	\vbox{ 
+		\centering
+		\includegraphics[width=1\linewidth]{quenched_frac_dist2host.pdf}
+		\includegraphics[width=1\linewidth]{quenched_frac_host_color.pdf}
+	}
+    \caption{Caption}
+    \label{fig:qfrac}
+\end{figure*}
+
+
 Dwarf galaxy: most of them are blue in field, and most satellites of MW and larger groups/clusters are quenched. Among others, tidal stripping and ram-pressure stripping are thought to quench the satellites. 
 
-UDG quenching: most studies found red UDGs in clusters, blue UDGs in fields, however there are one or two red UDGs in fields. It is unclear 1) are UDGs born to be large and diffuse (Amorisco); 2) if not, how are they puffed up? 3) how are they quenched? what's the correlation between quenching and puffing. 
+In this section we show the quenched fraction of UDG/UPGs without discussing too much about the physical implication on both UDG population and the general quenching-mass-size relation.
+
+UDG quenching: most studies found red UDGs in clusters, blue UDGs in fields \citep{Prole2019,Leisman2017}, however there are one or two red UDGs in fields. It is unclear 1) are UDGs born to be large and diffuse (Amorisco); 2) if not, how are they puffed up? 3) how are they quenched? what's the correlation between quenching and puffing. 
+
+Find literature for quenched fraction as a function of distance to host (Einasto 1974, Spekkens2014, Karunakaran2022 for MW and M31).
 
 We compare with SAGA quenched fraction (Mao) and ELVES (Carlsten, Greene in prep).
 
@@ -541,25 +560,13 @@ SAGA misses a fraction of red faint galaxies in their intial detection catalogs.
 SAGA SB limit is 25. ARTEMIS is able to reproduce SAGA quenched fraction. 
 
 
-\begin{figure*}
-	\vbox{ 
-		\centering
-		\includegraphics[width=1\linewidth]{quenched_frac_dist2host.pdf}
-		\includegraphics[width=1\linewidth]{quenched_frac_host_color.pdf}
-	}
-    \caption{Caption}
-    \label{fig:qfrac_dist2host}
-\end{figure*}
 
-\begin{figure*}
-	\vbox{ 
-		\centering
-		\includegraphics[width=1\linewidth]{quenched_frac_host_color.pdf}
-	}
-    \caption{Caption}
-    \label{fig:qfrac_host_color}
-\end{figure*}
 
+
+
+\section{Discussion and Conclusion}
+TODO: make data products (catalogs, fake UDGs, website for their images, etc.)
+\subsection{High quenched fraction of UDGs is an artifact}
 
 \begin{figure*}
 	\vbox{ 
@@ -570,12 +577,14 @@ SAGA SB limit is 25. ARTEMIS is able to reproduce SAGA quenched fraction.
     \label{fig:mass_size}
 \end{figure*}
 
+\subsection{UDG formation}
+Discuss how does quenching and pufffing interplay.
 
-\section{Discussion and Conclusion}
-TODO: make data products (catalogs, fake UDGs, website for their images, etc.)
+Galaxy conformity: mass-size independent of color, jenny's quenched fraction independent of morph. 
 
+Pre-puffed up or pre-quenched?
 
-\subsection{A better definition for diffuse galaxies}
+Amorisco with my size distribution?
 
 discuss pros and cons of UDG and UPG (you have to assume a distance to define UPG).
 
@@ -599,6 +608,9 @@ calculate probability of being a backsplash satellite (e.g., splashed to 1.5 Mpc
 Compare spatial distribution with normal dwarf? iF they are indeed high-spin tail of normal dwarfs. 
 
 Don't forget to discuss \citep{xSAGA-I}
+
+
+\subsection{A better definition for diffuse galaxies}
 
 
 \section*{Acknowledgment}
