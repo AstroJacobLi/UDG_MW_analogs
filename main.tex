@@ -454,7 +454,7 @@ We selected a patch of sky with 24 deg$^{2}$ in HSC S18A. Then we performed the 
 
 Using the number densities and the probed area of our survey, we calculate the fraction of contamination for both UDG and UPG sample. For the UDG sample, there are $f_{\rm contam} \approx 16\%$ contaminants; for the UPG sample, the contamination fraction is $f_{\rm contam} \approx 20\%$. We take the contamination fraction into account when calculating the average UDG (UPG) number in Section \ref{sec:results}. 
 
-One of the main goals of this paper is to study the star formation status of UDGs and UPGs in MW analogs. The star formation rate of galaxies is indicated by broad-band colors, and we use color to calculate the quenched fraction of UDGs and UPGs. However, background contaminants affect the color distribution of the UDG (UPG) sample, thus affect the calculated quenched fraction. If the fake UDGs (UPGs) span a different region from the true UDGs in the observable space, we can use these observables to assign weights to each object in our UDG sample indicating the possibility of being a true UDG. Indeed, we find that the $g-i$ color distribution of the fake UDG sample is bluer than that of the true UDG sample, which motivates us to assign an importance weights based on $g-i$ color. We first compute the normalized histograms of $g-i$ colors (denoted as $\lambda_k$ at $(g-i)_{k}$ bins) for both true UDG and fake UDG samples. Then we multiply $f_{\rm contam}$ with the histogram of fake UDG sample ($\lambda_k^{\rm fake}$) such that the histogram sums up to the average contamination fraction. The weights of UDGs in color bin $(g-i)_k$ is estimated to be $w_k = \max\,(1 - f_{\rm contam} \lambda_k^{\rm fake} / \lambda_k^{\rm true}, 0)$. This weight stands for a possibility of being a contaminant. The weights of UPGs are assigned following the same procedure. We find this color-based contamination subtraction scheme is sufficient for this work since the fraction of contamination is small. Our main results shown in Section \ref{sec:results} are robust against contamination subtraction. 
+One of the main goals of this paper is to study the star-forming properties of UDGs and UPGs in MW analogs. The star formation rate of galaxies is indicated by broad-band colors, and we use color to calculate the quenched fraction of UDGs and UPGs. However, background contaminants affect the color distribution of the UDG (UPG) sample, thus affect the calculated quenched fraction. If the fake UDGs (UPGs) span a different region from the true UDGs in the observable space, we can use these observables to assign weights to each object in our UDG sample indicating the possibility of being a true UDG. Indeed, we find that the $g-i$ color distribution of the fake UDG sample is bluer than that of the true UDG sample, which motivates us to assign an importance weights based on $g-i$ color. We first compute the normalized histograms of $g-i$ colors (denoted as $\lambda_k$ at $(g-i)_{k}$ bins) for both true UDG and fake UDG samples. Then we multiply $f_{\rm contam}$ with the histogram of fake UDG sample ($\lambda_k^{\rm fake}$) such that the histogram sums up to the average contamination fraction. The weights of UDGs in color bin $(g-i)_k$ is estimated to be $w_k = \max\,(1 - f_{\rm contam} \lambda_k^{\rm fake} / \lambda_k^{\rm true}, 0)$. This weight stands for a possibility of being a contaminant. The weights of UPGs are assigned following the same procedure. We find this color-based contamination subtraction scheme is sufficient for this work since the fraction of contamination is small. Our main results shown in Section \ref{sec:results} are robust against contamination subtraction. 
 
 
 \section{Results}\label{sec:results}
@@ -536,6 +536,28 @@ According to the concentration-mass relation of dark matter halos, the concentra
     \label{fig:qfrac}
 \end{figure*}
 
+The star-forming properties of UDGs and UPGs is an interesting subject given their diffuse stellar component and possible non-trivial formation history. In this section, we study the fraction of quenched UDGs and UPGs as a function of both stellar mass and their host properties. We defer the discussion on the implications of these results to Section \ref{sec:discussion}.
+
+We refer to quenching as the cessation of star formation in galaxies. In principle, direct estimates for the instantaneous star formation rate (SFR) from UV or H$\alpha$ are needed to define a quenched galaxy  population. As an example, the SAGA survey measures the H$\alpha$ equivalent width (EW) from spectra to define quenched satellites. However, these specific data sets are either not deep enough to probe our UDGs and UPGs, or they are very expensive to obtain and cover all the footprint of our sample. Therefore, we seek other indicators including integrated color and morphology to approximate star-forming properties. \citet{CarlstenELVES2022} visually inspected all satellites and classified them into early-type (red and smooth) and late-type (blue, asymmetric, clumpy). Using this sample, they find that a mass-dependent color cut $g-i = -0.067 M_V - 0.23$ could also divide the sample into early- and late-type that are nearly identical to the ones based on morphology. The derived quenched fractions based on morphology and color are very similar. Furthermore, \citet{Font2022} showed in simulations that this color cut effectively separates star forming galaxies from quenched ones. Since we do not visually inspect all UDGs and UPGs in our sample, we take the color cut from \citet{CarlstenELVES2022} to define our quenched galaxies: galaxies that are redder than $g-i > -0.067 M_V - 0.23$ are defined as quenched, whereas those bluer galaxies are thought to be star-forming. However, one caveat is that this criterion was derived from LV satellites in \citet{CarlstenELVES2022}, and the bulk of them are brighter than our UDGs and UPGs. It is not guaranteed that the same color cut would work in our regime. \footnote{Changing the intercept of the color cut to -0.28 makes the overall quenched fraction higher, but does not change the trend of quenched fraction as a function of stellar mass.}
+
+We derive V-band apparent magnitude following $V = g - 0.5784\, (g - r) - 0.0038$\footnote{This relation wass derived for SDSS filters. We neglect the small difference between SDSS and HSC filter systems. \url{http://classic.sdss.org/dr4/algorithms/sdssUBVRITransform.html\#Lupton2005}} and convert it to absolute magnitude $M_V$. For UDGs (UPGs) in each stellar mass bin, we calculate the fraction of quenched galaxies, but both denominator and numerator are weighted by the weights $w_k$ assigned in Section \ref{sec:bkg} to mitigate the impact of background contamination on quenched fractions. 
+
+In Figure \ref{fig:qfrac}, the green lines show the quenched fractions $f_q$ as a function of stellar mass for the whole UDG (\textit{left}) and UPG (\textit{right}) samples, and the error bars correspond to the $1\sigma$ Bernoulli standard error. The quenched fraction of UDGs is high ($\sim 0.7$) over $6.8 < \log\ M_\star/M_\odot < 8.5$ and weakly depends on the stellar mass. On the contrary, as increasing stellar mass, the quenched fraction of UPGs decreases from $f_q \approx 0.8$ at $10^{6.8}\ M_\odot$ to $f_q \approx 0.1$ at $10^{8.5}\ M_\odot$. 
+
+We notice that the UDG sample reaches to $\log\,M_\star\approx 8.3$ whereas UPG sample reaches to $\log\,M_\star\approx 9.0$. This is because $10^9\ M_\odot$ galaxies no longer satisfy the surface brightness cut for UDG. We are only able to probe galaxies down to $10^6.8\ M_\odot$ due to our detection limit. 
+
+
+
+Say we don't find dependence on host stellar mass (no fig here)
+
+They derived the quenched fraction based on morphology, and they also find that 
+
+It is shown that the morphology correlates with the 
+1
+the SFR is correlated with other 
+
+calculate the fraction of quenched 
+
 
 Dwarf galaxy: most of them are blue in field, and most satellites of MW and larger groups/clusters are quenched. Among others, tidal stripping and ram-pressure stripping are thought to quench the satellites. 
 
@@ -564,7 +586,7 @@ SAGA SB limit is 25. ARTEMIS is able to reproduce SAGA quenched fraction.
 
 
 
-\section{Discussion and Conclusion}
+\section{Discussion and Conclusion}\label{sec:discussion}
 TODO: make data products (catalogs, fake UDGs, website for their images, etc.)
 \subsection{High quenched fraction of UDGs is an artifact}
 
