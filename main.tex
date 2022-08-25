@@ -440,6 +440,10 @@ Since UDGs are relatively scarce in MW-like hosts \citep{SAGA-II,CarlstenELVES20
 After applying the stellar mass and redshift cuts to the NSA catalog, there are 23,218 galaxies left. Then we match them to the initial LSBG sample (described in Section \ref{sec:detection}, before the deblending step) as follows. For a given MW analog, we first calculate its virial radius $R_{\rm vir}$ assuming the stellar mass-halo mass relation in \citet{Behroozi2010}. It turns out that 40\% of hosts have virial radii larger than 300 kpc, which is commonly used as the virial radius of MW. Then we identify any LSBG that falls into the projected angular virial radius of the host. If one LSBG is matched to multiple hosts, we assign it to the nearest host based on the separation normalized by host virial radius. Finally, we have 901 MW-like hosts and 10,579 LSBG candidates associated with them. 
 However, there are still a significant fraction of spurious objects in this cross-matched LSBG sample, including galactic cirri, tidal tails/streams, shredded large galaxies, compact sources blended with galaxy outskirts, etc. As introduced in Section \ref{sec:deblending}, we perform a deblending step to effectively remove these spurious objects. There are 2,673 objects left after the deblending cuts. Next, we model them using the Spergel profile as described in Section \ref{sec:modeling} and obtain their properties from the fitting results. Based on the modeling results, we apply the same color cuts as in Section \ref{sec:deblending} and a size cut of $1.6\arcsec < r_e < 15\arcsec$ to further remove unreliable fits and false positives. We also remove duplicated objects. In the end, we have 2,510 LSBG candidates as our final LSBG sample, from which we construct the ultra-diffuse galaxy (UDG) sample and the ultra-puffy galaxy (UPG) samples as follows. 
 
+\jiaxuan{We don't discriminate our hosts to be paired or not. 
+Don't forget to discuss \citep{xSAGA-I} }
+
+
 \subsection{UDG and UPG sample}\label{sec:sample}
 The UDG population is usually defined based on the surface brightness and the physical size of the galaxy. However, there are many different criteria in literature: \citep{vanDokkum2015} define UDGs to have effective radius $r_e$ larger than 1.5 kpc and central surface brightness $\mu_0(g)$ fainter than $24.0\ \sbunit$; other groups also use the surface brightness at $r_e$ \citep[e.g.,][]{DiCintio2017,Cardona-Barrero2020} or the average surface brightness within $r_e$ to define UDGs \citep[e.g.,][]{Koda2015,Yagi2016,vdBurg2016,Leisman2017,Martin2019}, and the size criterion also varies from $>1$ kpc to $>1.5$ kpc. \citet{vanNest2022} explore these definitions and find that different choice of UDG could drastically affect which subset of dwarfs are selected, therefore affect our understanding of the UDG population.
 
@@ -591,9 +595,13 @@ According to the concentration-mass relation of dark matter halos, the concentra
 
 The star-forming properties of UDGs and UPGs is an interesting subject given their diffuse stellar component and possible non-trivial formation history. In this section, we study the fraction of quenched UDGs and UPGs as a function of both stellar mass and their host properties. We defer the discussion on the implications of these results to Section \ref{sec:discussion}.
 
+We don't discriminate our hosts to be paired or not. 
+
 We refer to quenching as the cessation of star formation in galaxies. In principle, direct estimates for the instantaneous star formation rate (SFR) from UV or H$\alpha$ or estimations for the \ion{H}{1} gas are needed to define a quenched galaxy  population. As an example, the SAGA survey measures the H$\alpha$ equivalent width (EW) from spectra to define quenched satellites. There are also many studies probing \ion{H}{1} masses for MW and M31 satellites \citep[e.g.,][]{Grcevich2009,Spekkens2014,Putman2021}. However, these specific data sets are either not deep enough to probe our UDGs and UPGs, or they are very expensive to obtain and cover all the footprint of our sample. Therefore, we seek other indicators including integrated color and morphology to approximate star-forming properties. \citet{CarlstenELVES2022} visually inspected all satellites and classified them into early-type (red and smooth) and late-type (blue, asymmetric, clumpy). Using this sample, they find that a mass-dependent color cut $g-i = -0.067 M_V - 0.23$ could also divide the sample into early- and late-type that are nearly identical to the ones based on morphology. The derived quenched fractions based on morphology and color are very similar. Furthermore, \citet{Font2022} showed in simulations that this color cut effectively separates star forming galaxies from quenched ones. This makes the color cut more promising since their simulations are not fine tuned to match the observed properties of dwarfs. Since we do not visually inspect all UDGs and UPGs in our sample, we take the color cut from \citet{CarlstenELVES2022} to define our quenched galaxies: galaxies that are redder than $g-i > -0.067 M_V - 0.23$ are defined as quenched, whereas those bluer galaxies are thought to be star-forming. However, one caveat is that this criterion was derived from LV satellites in \citet{CarlstenELVES2022} and the bulk of them have higher surface brightness and less extended than our UDGs and UPGs. It is not guaranteed that the same color cut would work in our regime. \footnote{\jiaxuan{Add some robustness tests, such as ``Changing the intercept of the color cut to -0.28 makes the overall quenched fraction higher, but does not change the trend of quenched fraction as a function of stellar mass.''}}
 
 We derive $V$-band apparent magnitude following $V = g - 0.5784\, (g - r) - 0.0038$\footnote{This relation was derived for SDSS filters. We neglect the small difference between SDSS and HSC filter systems. \url{http://classic.sdss.org/dr4/algorithms/sdssUBVRITransform.html\#Lupton2005}} and convert it to absolute magnitude $M_V$. For UDGs (UPGs) in each stellar mass bin, we calculate the fraction of quenched galaxies, but both denominator and numerator are weighted by the weights $w_k$ assigned in Section \ref{sec:bkg} to mitigate the impact of background contamination on quenched fractions. 
+
+describe the quenched fraction in percentage, e.g., half of them are quenched at 1e8. 
 
 In Figure \ref{fig:qfrac}, the green lines show the quenched fractions $f_q$ as a function of stellar mass for the whole UDG (\textit{left}) and UPG (\textit{right}) samples, and the error bars correspond to the $1\sigma$ Bernoulli standard error. The quenched fraction of UDGs is high ($\sim 0.7$) over $6.8 < \log\ M_\star/M_\odot < 8.5$ and weakly depends on the stellar mass. On the contrary, as increasing stellar mass, the quenched fraction of UPGs drastically decreases from $f_q \approx 0.8$ at $M_\star = 10^{6.8}\ M_\odot$ to $f_q \approx 0.1$ at $M_\star = 10^{8.5}\ M_\odot$. We further divide the sample based on the projected radial distance to the host $R/R_{\rm vir}$ (top panels) and the host $g-i$ color (bottom panels). As shown in the top panels in Figure \ref{fig:qfrac}, we find that UDGs (UPGs) that are closer to the host have a higher quenched fraction. The average difference on quenched fractions between the two radial bins is $\sim 0.1$ for UDG and $\sim 0.2$ for UPG. This trend is expected because the density of CGM is higher when it is closer to the host and thus quenches the UDGs (UPGs) via ram pressure stripping more efficiently. The tidal stripping is also stronger as satellites get closer to the host. From the bottom panels in Figure \ref{fig:qfrac}, we find that UDGs (UPGs) hosted by redder hosts also have a higher quenched fraction. The difference on quenched fraction between the two host color bins is $\sim 0.2$ for UDGs. But for UPGs, it seems that the host color impacts less than the distance to the host on the quenched fraction. This result might hint at ``galaxy conformity'', which refers to the fact that late-type hosts tend to have more late-type satellites \citep{Weinmann2006}. We also split the samples based on host stellar mass, but do not find a significant difference in quenched fractions. (echo Jenny's paper)
 
@@ -608,8 +616,6 @@ Compare to ELVES and simulations, our sample spans a narrower range in stellar m
 \section{Discussion}\label{sec:discussion}
 
 \subsection{High and constant quenched fraction of UDGs is an artifact}
-
-
 In Section \ref{sec:quench}, we calculate the quenched fraction as a function of stellar mass for UDGs (left panels in Figure \ref{fig:qfrac}). We find that the UDG quenched fraction is reasonably a constant over $>1$ dex in stellar mass, and is higher than the quenched fractions of UPGs and satellite population of MW analogs. In this subsection, we argue that UDG's high and constant quenched fraction is merely an artifact due to its contrived definition. 
 
 In Figure \ref{fig:mass_size}, we plot our UDG sample on the mass-size plane. Because we use a color cut $(g-i)_{Q} = -0.067 M_V - 0.23$ to define quenching, we define $\Delta(\mathrm{Quench}) = (g-i) - (g-i)_{Q}$ as an indicator for how much it has been quenched. Higher $\Delta(\mathrm{Quench})$ means that the galaxy is actively star-forming, whereas smaller $\Delta(\rm Quench)$ indicates the galaxy has been quenched more. The data points in Figure \ref{fig:mass_size} are color-coded by this $\Delta(\mathrm{Quench})$. As shown as green dashed lines, we plot the mass-size relation (and $1.5\sigma$ above the mean mass-size relation) derived from the satellite systems of MW analogs in Local Volume \citep{ELVES-I}. The two solid lines correspond to the surface brightness cut at $\sbeff = 25.0\ \sbunit$ by assuming different colors. For the redshift range of our sample, the surface brightness is a constant with distance since the cosmological effect is negligible. 
@@ -646,114 +652,67 @@ SAGA SB limit is 25. ARTEMIS is able to reproduce SAGA quenched fraction.
 
 
 
-\subsection{UDG formation}
-Questions:
-1. How are MW satellites quenched? 
-2. How are UDG puffed up?
-
-Answer the two questions, then combine the answers together to form a story
-
-We need an outline of discussion
+\subsection{UDG and UPG formation}
+In this paper, one surprising finding is that although UPGs have extremely large size for their stellar mass, they have similar quiescent fraction as normal satellites in MW analogs. In ELVES, \citet{ELVES-I} find that the mass-size relation of satellites in MW analogs does not depend on the morphology (equivalently color) of satellites. They interpret this trend as that the quenching and morphological transformation involves very mild size evolution. These evidences might indicate that quenching and size growth must happen separately. Then the question is what physics is responsible for the two processes respectively. In this section, we first review the quenching of MW satellites and the mechanisms for puffing up normal dwarfs to produce UDGs (UPGs). Then we combine the results presented in Section \ref{sec:results} and discuss possible implications on the formation and quenching of UDGs and UPGs. 
+\footnote{\jiaxuan{Greene et al. (in prep) also find no trend of quenched fraction on the size?}} 
 
 %%%%%%%%%%%%%%%%%%%
-% 如果upg也是一边quench一边变大，那么为什么upg变得那么大？是不是某种机制能让tidal stripping/heating对于upg非常强？
+Isolated dwarf galaxies in the field are known to be star-forming \citep{Geha2012}, but satellites in the Local Group and Local Volume are more quiescent \citep{Grcevich2009,Spekkens2014,Wetzel2015,Putman2021,CarlstenELVES2022}. This difference hints that the MW environments play an important role on regulating the star formation activities in dwarf galaxies. There have been extensive works using simulations to study the quenching of satellites in MW analogs \citep[e.g.,][]{Simpson2018,Buck2019,Garrison-Kimmel2019,Simons2020,Joshi2021,Akins2021,Karunakaran2021,Font2022,Samuel2022}, and many of them are able to reproduce the observed quenched fraction in the Local Group and in the Local Volume. 
+% the satellites in MW analogs are mostly quiescent below $M_\star\approx 10^7\ M_\odot$, and the quenched fraction drops as increasing stellar mass. 
 
-Isolated dwarf galaxies in the field are known to be star-forming \citep{Geha2012}, but satellites in the Local Group and Local Volume are mostly quiescent \citep{Grcevich2009,Spekkens2014,Wetzel2015,Putman2021,CarlstenELVES2022}. This difference hints that environmental effects play an important role on regulating the star formation activities in dwarf galaxies. There have been extensive works using simulations to study the quenching of satellites in MW analogs \citep[e.g.,][]{Simpson2018,Buck2019,Garrison-Kimmel2019,Simons2020,Joshi2021,Akins2021,Karunakaran2021,Font2022,Samuel2022}, and many of the simulations are able to reproduce the observed quenched fraction in the Local Group and in the Local Volume: the satellites in MW analogs are mostly quiescent below $M_\star\approx 10^7\ M_\odot$, and the quenched fraction decreases as increasing stellar mass. 
+In theory, satellite galaxies in MW analogs are accreted from the field, therefore quenching can happen either before or after the infall to MW host. In the former case, isolated dwarf galaxies can be quenched by bursty stellar feedback \citep[e.g.,][]{Bahe2015,Kazantzidis2017,ElBadry2018}, reionization \citep[e.g.,][]{Bullock2000,Benson2002,Somerville2002,Tollerud2018,Applebaum2021}, or being backsplash satellites \citep{Simpson2018,Benavides2021}. If a satellite is star-forming before infall, the ram pressure \citep[e.g.,][]{GunnGott1972,McCarthy2008,Simpson2018,Tremmel2020,Samuel2022} experienced by the satellite as it move through the hot circumgalactic medium (CGM) of the host could remove the gas and cause the cessation of star formation. It has been shown that ram pressure stripping can 
+efficiently quench galaxies at $M_\star < 10^{8}\ M_\odot$ \citep{Fillingham2016,Simpson2018,Buck2019}. Tidal stripping can also deprive the gas from the satellite or stop the gas accretion and starve the galaxy \citep{Simpson2018}, but strong tidal interactions are needed because dark matter needs to be deprived before significant gas loss happens. Another quenching mechanism is the so-called preprocessing in a lower-mass group prior to the infall into a MW analog \citep{Wetzel2015b,Jahn2022,Samuel2022}. Satellites might be quenched in the previous group via ram pressure striping or tidal interactions, and gas distribution can also be altered in preprocessing even without being quenched. \citet{Samuel2022} show that 40\% of satellites were preprocessed before the infall to MW. Some studies also show that the paired host environments might enhance the quenching of satellites (\citealt{Garrison-Kimmel2019,Putman2021}, but also see \citealt{Samuel2022}). 
 
-In theory, satellite galaxies in MW analogs are accreted from the field, therefore quenching can happen either prior to the infall or after the infall to MW host. For the former case, isolated dwarf galaxies can be quenched by bursty stellar feedback \citep[e.g.,][]{Bahe2015,Kazantzidis2017,ElBadry2018}, reionization \citep[e.g.,][]{Bullock2000,Benson2002,Somerville2002,Tollerud2018,Applebaum2021}, or being backsplash satellites \citep{Simpson2018}. If a satellite is still star-forming before infall, then the ram pressure \citep[e.g.,][]{GunnGott1972,McCarthy2008,Simpson2018,Tremmel2020,Samuel2022} experienced by the satellite as it move through the hot circumgalactic medium (CGM) of the host could remove the gas and cause the cessation of star formation. Ram pressure stripping can 
-efficiently quench galaxies at $M_\star < 10^{8}\ M_\odot$ \citep{Fillingham2016,Simpson2018,Buck2019}, but the quenching depends on the CGM mass and distribution, the orbits of satellites, etc. Another quenching mechanism is the so-called preprocessing in a lower-mass group prior to the infall into a MW analog \citep{Wetzel2015b,Jahn2022,Samuel2022}. Satellites might be quenched in the previous group via ram pressure striping or tidal interactions.
-Preprocessing can augment the environmental quenching. Some studies show that the paired host environments might regulate the quenching of satellites (\citealt{Garrison-Kimmel2019,Putman2021}, but also see \citealt{Samuel2022}). Tidal stripping can also deprive the gas from the satellite or stop the gas accretion and starve the galaxy \citep{Simpson2018}. 
+For UDGs and UPGs in MW analogs, they have extremely large size compared with normal satellites with their masses. Many mechanisms are proposed to explain the large size of UDGs (UPGs) in simulations. For isolated UDGs, bursty stellar feedback can cause the stellar component of dwarf galaxy to expand \citep[e.g.,][]{DiCintio2017,Chan2018,Martin2019,Jiang2019,Carleton2019}. Analytical models also support a scenario where UDGs originates from a population of dwarf galaxies residing in halos with higher spin \citep{Dalcanton1997,Amorisco2016,Rong2017,Liao2019}. \citet{Wright2021} show that field UDGs can also be formed from major mergers that cause star formation to
+migrate outward. For UDGs in groups and clusters, environmental effects are more pronounced and tidal interactions are believed to puff up normal dwarfs. \citet{Jiang2019} find that the UDGs in groups are either accreted as UDGs from field or accreted as normal dwarfs but get tidally heated near the orbital pericenter. \citet{Tremmel2020} study UDG formation in cluster environment and find UDGs with higher mass ($M_\star > 10^{8}\ M_\odot$) are puffed up suddenly due to tidal heating at pericenter, but UDGs with lower mass ($M_\star \sim 10^{7.5}\ M_\odot$) are gradually puffed up due to adiabatic expansion as a response to the mass loss from tidal stripping and ram pressures stripping. \citet{Kado-Fong2021} study the intrinsic shape of UDGs in observations and find the inferred shapes agree with merger scenario for field UDGs \citep{Wright2021} and tidal heating/adiabatic expansion for group/cluster UDGs \citep{Jiang2019,Tremmel2020}. 
+
+
+For UDGs in groups, since they probably experienced strong tidal interactions, it is not obviously clear whether they are quenched mainly by tidal stripping or ram pressure stripping. 
+% In the tidal stripping scenario, dark matter needs to be removed before a significant fraction of gas are deprived by tidal force, indicating a longer quenching timescale. 
+\citet{Jiang2019} argue that if tidal stripping dominates the quenching, the satellite closer to the host will have smaller stellar mass and effective radius since stars are also stripped. They find no such trend in simulation, but find that the average color is redder when the UDGs closer to the host, supporting that ram pressure stripping is more dominant. In Section \ref{sec:size_distr}, we split the sample into two radial distance bins, and we do not find significant change in size or stellar mass distribution as UDGs get closer to the host. 
+
+In Auriga simulations, \citet{Simpson2018} show that the quenched fraction of satellites $M_\star < 10^8\ M_\odot$ have a strong dependence on the distance to the hosts. Using the FIRE-2 simulation, \citet{Samuel2022} also show that the quenched fraction increase as the distance to the host decreases, and hosts with higher CGM mass have more quenched satellites. In Figure \ref{fig:qfrac}, by comparing UDGs and UPGs at two radial bins, we find the very similar trends that UDGs (UPGs) closer to the host are more quiescent. In the ram pressure stripping picture, this is because the density of CGM increases when being closer to the host and the ram pressure is stronger. Together with the null trend on size and stellar mass distribution as UDGs (UPGs) get closer to their hosts, our findings support that ram pressure stripping is the major quenching channel for UDGs (UPGs) in MW analogs. 
+
+
 %Combining all these factors together, returning backsplash galaxies can also exhibit as other satellites. 
 
-\citet{Simpson2018} show in Auriga simulations that the quenched fraction of satellites $M_\star < 10^8\ M_\odot$ have a strong dependence on the distance to the hosts. Using the FIRE-2 simulation, \citet{Samuel2022} also show that the quenched fraction increase as the distance to the host decreases, and hosts with higher CGM mass have more quenched satellites. In Figure \ref{fig:qfrac}, by comparing UDGs and UPGs at two radial bins, we find the very similar trends that UDGs (UPGs) closer to the host are more quiescent. In the ram pressure stripping picture, this is because the density of CGM increases when being closer to the host and the ram pressure is stronger. Our observation supports that UDGs and UPGs are mainly quenched by ram pressure stripping. 
+If UDGs and UPGs are quenched by ram pressure stripping, how are they puffed up? UPGs can be puffed during the infall or prior to the infall. If UPGs are accreted into MW hosts from the field as normal dwarfs and puffed up due to tidal heating, we will expect a higher quenched fraction since they must undergo more violent tidal interactions, and the ram pressure is also stronger at distances closer to the host. If they are puffed up due to a longer term adiabatic expansion due to the mass loss, the expansion should also be proportional to the amount of gas loss, which translates to quenched fraction. Therefore, tidal puffing during infall seems to contradict with the normal quenched fraction as seen in Figure \ref{fig:qfrac}.
 
-\citet{Samuel2022} show that 40\% of satellites were in another group prior to the infall to MW, and preprocessed satellites have higher quenched fraction, and 10\% were quenched during preprocessing. 
-
-
-% How are UDGs puffed up?
-Many mechanisms are also proposed to explain the large size of UDGs in simulation. For isolated UDGs, burst stellar feedback can cause the stellar component of dwarf galaxy to expand \citep[e.g.,][]{DiCintio2017,Chan2018,Martin2019,Jiang2019}. Analytical models also support a scenario where UDGs originates from a population of dwarf galaxies with higher spin than normal dwarfs \citep{Dalcanton1997,Amorisco2016,Rong2017,Liao2019}. \citet{Wright2021} show that field UDGs can also be formed from major mergers that cause star formation to
-migrate outward. For UDGs in groups and clusters, environmental effects are more pronounced and tidal interactions are believed to puff up normal dwarfs to become UDGs. \citet{Jiang2019} use the NIHAO simulations and find that the UDGs in groups are either accreted as UDGs or accreted as normal dwarfs but get tidally heated near the orbital pericenter. \citet{Tremmel2020} study UDG formation in cluster environment and find UDGs with higher mass ($M_\star > 10^{8}\ M_\odot$) are puffed up suddenly due to tidal heating at pericenter, but UDGs with lower mass ($M_\star \sim 10^{7.5}\ M_\odot$) are gradually puffed up due to adiabatic expansion as a response to the mass loss from tidal stripping and ram pressures stripping. 
-
-For UDGs in groups, since they probably experienced strong tidal interactions, it is not obviously clear whether they are quenched by tidal stripping or ram pressure stripping. However, in the tidal stripping scenario, dark matter needs to be removed before a significant fraction of gas are deprived by tidal force, indicating a longer quenching timescale. \citet{Jiang2019} argue that if tidal stripping is dominant in quenching, the satellites closer to the host will have smaller size and stellar mass since stars are also stripped. They find no such trend in simulation, but find that the average color is redder when the UDGs closer to the host, supporting that ram pressure stripping is dominant. In Section \ref{sec:size_distr}, we split the sample into two radial distance bins, and we do not find significant change in size distribution as UDGs get closer to the host. We also do not find any significant dependence of stellar mass distribution on radial distance for both UDGs and UPGs. Together with the fact that the quenched fraction decreases as UDGs (UPGs) get closer to their hosts, our findings agree with \citet{Jiang2019} that ram pressure stripping is the major quenching channel for UDGs (UPGs) in MW analogs. 
+It is more feasible that UPGs are already puffed up before accretion and remain being star-forming. They are quenched by ram pressure stripping in the MW host with other normal satellites. In order to achieve similar quenched fraction as normal satellites, field UPGs prior to infall have to be star forming. Bursty star formation, early merger, higher halo spin, and preprocessing can all puff up the field dwarfs to become UPGs, and some of them seem not to quench the UPGs. \citet{Wright2021} show that early merger does not significant change the total SFR. \citet{Samuel2022} show that preprocessing can marginal boost the quenched fraction by 20\% at $M_\star \approx 10^8\ M_\odot$ and merely change the quenched fraction for lower mass satellites. Although it is not clear whether the high halo spin is the cause or the consequence of UPG formation, it is probable that higher halo spin does not quench a UPG. If any of these mechanisms can only increase the size to make UPGs but not quench them, it provides a plausible way to produce the observed trend in Fig. \ref{fig:qfrac} where quenching and size growth are decoupled.
+However, the efficiency of ram pressure stripping also depends on the stellar mass density which provides the restoring force. The diffuse stellar component might make UPGs more vulnerable to ram pressure stripping and tidal stripping. It is also possible that UPGs in MW analogs are a mixture of field UPGs and normal dwarfs puffed up during infall. Using our observations, it is hard to sort out detailed mechanisms for quenching and size growth of UPGs. More detailed studies in observation and simulation are needed to solve this puzzle.
 
 
-One surprising finding in this work is that although UPGs have extreme size given their stellar mass, they have similar quiescent fraction as normal satellites in MW analogs. In ELVES, Greene et al. (in prep) also find no trend of quenched fraction on the distance to average mass-size relation. This null trend hints that quenching and size growth must happen separately. 
+% \citet{Wright2021} observed a temporary boost in spin after the early merger. \citet{Liao2019} find that blue field UDGs indeed have higher halo spins. If field UDGs (UPGs) are born in high spin halos, they might have similar SFR as normal field dwarfs. 
 
-1. UPGs are accreted into MW hosts from fields as normal dwarfs. If they subsequently get quenched and puffed up together due to tidal forces, we will expect a higher quenched fraction for UPGs since they must undergo more violent tidal interactions. If UPGs are quenched due to ram pressure stripping and puffed up due to tidal heating (one time event at pericenter), they will also exhibit higher quenched fraction because ram pressure is also stronger at pericenter. If they are puffed up due to a longer term adiabatic expansion \citep{Tremmel2020} due to mass loss, then the expansion should also be proportional to the amount of gas loss, which translates to quenched fraction.
+% \citet{Samuel2022} show that 40\% of satellites were in another group prior to the infall to MW, and preprocessed satellites have higher quenched fraction, and 10\% were quenched during preprocessing. 
+\jiaxuan{Do we need to discuss splashback somewhere?}
 
-2. If UPGs are already puffed up before accretion (bursty SF, merger, high spin halo), but remain star-forming, then they are quenched together as other normal satellites. 
+% \jiaxuan{But UDGs have higher HI density?} 
 
-Bursty SF can puff the size up, but can also quench the galaxy due to SN feedback. 
-
-Merger: early merger can redistribute the SF to the outer regions in UDGs, but doesn't change the total SFR too much. This might be a good thing. 
-
-High spin: blue field UDGs have higher spin.
-
-Preprocessing in a lower-mass group can also puff up the UPGs. \citet{Samuel2022} show that preprocessing can boost the quenched fraction by 20\% but only at $M_\star \approx 10^8\ M_\odot$. For lower mass satellites, preprocessing merely change the quenched fraction. If preprocessing only increase the size of normal dwarfs to be UPGs but not quench them, it might be a plausible way to produce the observed trend in Fig. \ref{fig:qfrac}.
-
-splashback: they must be quenched in their prior infall.
-
-
-However, the efficiency of ram pressure stripping also depends on the stellar mass density which provides the restoring force. The diffuse stellar component makes UPGs more vulnerable to ram pressure stripping. \jiaxuan{But UDGs have higher HI density?} 
-
-
-\citet{Kado-Fong2021} study the intrinsic shape of UDGs in observation and find the shape agree with merger scenario for field UDGs \citep{Wright2021} and tidal heating/adiabatic expansion for group/cluster UDGs \citep{Jiang2019,Tremmel2020}. 
-
-% Jiang: If tidal stripping is more important, the tidal force that strips the cold gas can also remove the stars from the outskirts of the satellite, reducing its r1/2 and M⋆. Since the tidal field is stronger in the inner part of a group, an inevitable side effect, if tidal stripping is the dominant quenching mechanism, is that the UDGs closer to the cluster centre would have lower M⋆ and r1/2 than the UDGs on the outskirts or in the field.
-
-% We don't discriminate our hosts to be paired or not. 
-
-
-% Ram pressure within a MW-mass halo should be sufficient to quench most satellites with $M_\star < 10^8\ M_\odot$, as long as the host CGM is suf- ficiently clumpy (Fillingham et al. 2016).
+% splashback: they must be quenched in their prior infall.
 
 % \citet{Samuel2022} find that HI gas can form a concentrated core after ram-pressure stripping and be there for quite long. \citet{Font2022} find LSB galaxies in FIRE-2 have concentrated stellar core. Oh, but the core might not be dense enough to form stars. 
 
-% The MW simulations we use from the FIRE-2 simulations do not include any form of AGN feedback, but we note that this feedback channel does not seem to be necessary to reproduce the quiescent fraction of observed LG and SAGA survey satellite galaxies.
+% Galaxy conformity: mass-size independent of color, jenny's quenched fraction independent of morph. 
 
+% Scenarios:
+% 1. violent environmental effects: radial orbits, back-splash both explain large size and quenching. But according to Bernavidis et al, the quenched fraction drops with increasing mass. 
 
+% 2. accreting field UDGs, and quench them due to ram pressure stripping. But how long do accreted UDGs last before being destroyed? Need to look at ram pressure stripping literature.
 
-discuss splashback
+% Homework:
+% 1. Move the stellar mass bin definition, try to match with red/blue, spiral/elliptical plot. If cannot match, does this hint the formation scenarios?
+% 2. How significant do we detect blue UDGs? 
+% 3. Split into redshift bins
 
-quenching and puffing are decoupled. 
+% UDG rejuvenate after ram pressure stripping?
 
-No splashback
-
-Discuss how does quenching and pufffing interplay.
-
-Galaxy conformity: mass-size independent of color, jenny's quenched fraction independent of morph. 
-
-Pre-puffed up or pre-quenched?
-
-Amorisco with my size distribution?
-
-
-UDGs are HI enhanced \citep{Wright2021,Kado-Fong2021}
-
-Scenarios:
-1. violent environmental effects: radial orbits, back-splash both explain large size and quenching. But according to Bernavidis et al, the quenched fraction drops with increasing mass. 
-
-2. accreting field UDGs, and quench them due to ram pressure stripping. But how long do accreted UDGs last before being destroyed? Need to look at ram pressure stripping literature.
-
-Homework:
-3. Move the stellar mass bin definition, try to match with red/blue, spiral/elliptical plot. If cannot match, does this hint the formation scenarios?
-4. How significant do we detect blue UDGs? 
-5. Split into redshift bins
-
-
-UDG rejuvenate after ram pressure stripping?
-
-
-calculate probability of being a backsplash satellite (e.g., splashed to 1.5 Mpc)
-
-Compare spatial distribution with normal dwarf? iF they are indeed high-spin tail of normal dwarfs. 
-
-Host-to-host variation
-
-Don't forget to discuss \citep{xSAGA-I}
+% calculate probability of being a backsplash satellite (e.g., splashed to 1.5 Mpc)
+% Compare spatial distribution with normal dwarf? iF they are indeed high-spin tail of normal dwarfs. 
+% Host-to-host variation
 
 
 \subsection{A better definition for diffuse galaxies}
-
 
 
 From \citet{Wright2021}, We can take this into our paper: At high mass (M⋆ > 108 M⊙), most galaxies have reff > 1.5 kpc. UDGs are therefore those galaxies that are unusually LSB. At low mass (M⋆ < 107.5 M⊙), most galaxies have μ0,g > 24 mag arcsec−2. UDGs are therefore those galaxies that have unusually large effective radii. It is only really at intermediate masses that both the central surface brightness and the effective radius criteria are relevant.
@@ -766,7 +725,9 @@ discuss pros and cons of UDG and UPG (you have to assume a distance to define UP
 
 \section{Summary}
 \begin{itemize}
-    \item Future works: nucleation, intrinsic shape, LSBG cross-correlation, unsupervised machine learning, color gradient, non-par shapes.
+    \item we advocate studies for the quenched fraction as a function of size in simulations
+    
+    \item Future works: nucleation, intrinsic shape, LSBG cross-correlation, unsupervised machine learning, color gradient, non-par shapes. 
 \end{itemize}
 
 \section*{Acknowledgment}
