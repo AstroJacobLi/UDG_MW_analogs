@@ -492,10 +492,20 @@ In this section, we present statistical analysis of UDGs and UPGs associated wit
 
 \subsection{UDG and UPG on mass-size plane}
 
+\begin{figure*}
+	\vbox{ 
+		\centering
+		\includegraphics[width=1\linewidth]{mass_size_plane.pdf}
+	}
+    \caption{The distributions of the UDG and UPG sample on the mass-size plane. The data points are color-coded by the distance to the quenching color cut. Squares are those galaxies satisfying both UDG and UPG definition, stars (triangles) are those only satisfying UDG (UPG) definition.
+    We plot the average mass-size relation (light green) and $1.5\sigma$ above the average relation (dark green) as dashed lines for reference. In the left panel, we show the constant surface brightness line as solid lines by assuming two different $g-i$ colors. Galaxies falling between these two lines are mostly red and quenched because blue UDGs have too be very large in size to satisfy the surface brightness criterion. This hard surface brightness cut makes the UDG quenched fraction high. 
+    }
+    \label{fig:mass_size}
+\end{figure*}
 
 
 \subsection{Abundance of UDGs and UPGs}\label{sec:n_udg}
-
+\jiaxuan{Discuss NGVS}
 \begin{figure*}
 	\vbox{ 
 		\centering
@@ -599,17 +609,6 @@ Compare to ELVES and simulations, our sample spans a narrower range in stellar m
 
 \subsection{High and constant quenched fraction of UDGs is an artifact}
 
-\begin{figure*}
-	\vbox{ 
-		\centering
-		\includegraphics[width=1\linewidth]{mass_size_plane.pdf}
-	}
-    \caption{The distributions of the UDG and UPG sample on the mass-size plane. The data points are color-coded by the distance to the quenching color cut. Squares are those galaxies satisfying both UDG and UPG definition, stars (triangles) are those only satisfying UDG (UPG) definition.
-    We plot the average mass-size relation (light green) and $1.5\sigma$ above the average relation (dark green) as dashed lines for reference. In the left panel, we show the constant surface brightness line as solid lines by assuming two different $g-i$ colors. Galaxies falling between these two lines are mostly red and quenched because blue UDGs have too be very large in size to satisfy the surface brightness criterion. This hard surface brightness cut makes the UDG quenched fraction high. 
-    }
-    \label{fig:mass_size}
-\end{figure*}
-
 
 In Section \ref{sec:quench}, we calculate the quenched fraction as a function of stellar mass for UDGs (left panels in Figure \ref{fig:qfrac}). We find that the UDG quenched fraction is reasonably a constant over $>1$ dex in stellar mass, and is higher than the quenched fractions of UPGs and satellite population of MW analogs. In this subsection, we argue that UDG's high and constant quenched fraction is merely an artifact due to its contrived definition. 
 
@@ -671,13 +670,34 @@ Preprocessing can augment the environmental quenching. Some studies show that th
 \citet{Samuel2022} show that 40\% of satellites were in another group prior to the infall to MW, and preprocessed satellites have higher quenched fraction, and 10\% were quenched during preprocessing. 
 
 
+% How are UDGs puffed up?
+Many mechanisms are also proposed to explain the large size of UDGs in simulation. For isolated UDGs, burst stellar feedback can cause the stellar component of dwarf galaxy to expand \citep[e.g.,][]{DiCintio2017,Chan2018,Martin2019,Jiang2019}. Analytical models also support a scenario where UDGs originates from a population of dwarf galaxies with higher spin than normal dwarfs \citep{Dalcanton1997,Amorisco2016,Rong2017,Liao2019}. \citet{Wright2021} show that field UDGs can also be formed from major mergers that cause star formation to
+migrate outward. For UDGs in groups and clusters, environmental effects are more pronounced and tidal interactions are believed to puff up normal dwarfs to become UDGs. \citet{Jiang2019} use the NIHAO simulations and find that the UDGs in groups are either accreted as UDGs or accreted as normal dwarfs but get tidally heated near the orbital pericenter. \citet{Tremmel2020} study UDG formation in cluster environment and find UDGs with higher mass ($M_\star > 10^{8}\ M_\odot$) are puffed up suddenly due to tidal heating at pericenter, but UDGs with lower mass ($M_\star \sim 10^{7.5}\ M_\odot$) are gradually puffed up due to adiabatic expansion as a response to the mass loss from tidal stripping and ram pressures stripping. 
 
-Many mechanisms are also proposed to explain the large size of UDGs in simulation. For isolated UDGs, burst stellar feedback can cause the stellar component of dwarf galaxy to expand \citep[e.g.,][]{DiCintio2017,Chan2018,Martin2019,Jiang2019}. Analytical models also support a scenario where UDGs originates from a population of dwarf galaxies with higher spin than normal dwarfs \citep{Amorisco2016,Rong2017,Liao2019}. For UDGs in groups and clusters, environmental effects are more pronounced and tidal interactions are believed to puff up normal dwarfs to become UDGs. \citet{Jiang2019} argue that normal dwarfs can be tidally heated near the orbital pericenter, 
+For UDGs in groups, since they probably experienced strong tidal interactions, it is not obviously clear whether they are quenched by tidal stripping or ram pressure stripping. However, in the tidal stripping scenario, dark matter needs to be removed before a significant fraction of gas are deprived by tidal force, indicating a longer quenching timescale. \citet{Jiang2019} argue that if tidal stripping is dominant in quenching, the satellites closer to the host will have smaller size and stellar mass since stars are also stripped. They find no such trend in simulation, but find that the average color is redder when the UDGs closer to the host, supporting that ram pressure stripping is dominant. In Section \ref{sec:size_distr}, we split the sample into two radial distance bins, and we do not find significant change in size distribution as UDGs get closer to the host. We also do not find any significant dependence of stellar mass distribution on radial distance for both UDGs and UPGs. Together with the fact that the quenched fraction decreases as UDGs (UPGs) get closer to their hosts, our findings agree with \citet{Jiang2019} that ram pressure stripping is the major quenching channel for UDGs (UPGs) in MW analogs. 
 
-\citet{Jiang2019} find that the average color is redder when it's closer to the host, and no size gradient as a function of distance, also attributing that ram-pressure stripping quenches the UDGs in groups, rather than tidal stripping. 
 
-\citet{Tremmel2020} study UDG formation in cluster environment and find UDGs with higher mass are puffed up suddenly due to tidal heating at pericenter, UDGs with lower mass are gradually puffed up due to adiabatic expansion as a response to the mass loss (DM + gas + star) from tidal stripipng and ram pressures stripping. 
+One surprising finding in this work is that although UPGs have extreme size given their stellar mass, they have similar quiescent fraction as normal satellites in MW analogs. In ELVES, Greene et al. (in prep) also find no trend of quenched fraction on the distance to average mass-size relation. This null trend hints that quenching and size growth must happen separately. 
 
+1. UPGs are accreted into MW hosts from fields as normal dwarfs. If they subsequently get quenched and puffed up together due to tidal forces, we will expect a higher quenched fraction for UPGs since they must undergo more violent tidal interactions. If UPGs are quenched due to ram pressure stripping and puffed up due to tidal heating (one time event at pericenter), they will also exhibit higher quenched fraction because ram pressure is also stronger at pericenter. If they are puffed up due to a longer term adiabatic expansion \citep{Tremmel2020} due to mass loss, then the expansion should also be proportional to the amount of gas loss, which translates to quenched fraction.
+
+2. If UPGs are already puffed up before accretion (bursty SF, merger, high spin halo), but remain star-forming, then they are quenched together as other normal satellites. 
+
+Bursty SF can puff the size up, but can also quench the galaxy due to SN feedback. 
+
+Merger: early merger can redistribute the SF to the outer regions in UDGs, but doesn't change the total SFR too much. This might be a good thing. 
+
+High spin: blue field UDGs have higher spin.
+
+Preprocessing in a lower-mass group can also puff up the UPGs. \citet{Samuel2022} show that preprocessing can boost the quenched fraction by 20\% but only at $M_\star \approx 10^8\ M_\odot$. For lower mass satellites, preprocessing merely change the quenched fraction. If preprocessing only increase the size of normal dwarfs to be UPGs but not quench them, it might be a plausible way to produce the observed trend in Fig. \ref{fig:qfrac}.
+
+splashback: they must be quenched in their prior infall.
+
+
+However, the efficiency of ram pressure stripping also depends on the stellar mass density which provides the restoring force. The diffuse stellar component makes UPGs more vulnerable to ram pressure stripping. \jiaxuan{But UDGs have higher HI density?} 
+
+
+\citet{Kado-Fong2021} study the intrinsic shape of UDGs in observation and find the shape agree with merger scenario for field UDGs \citep{Wright2021} and tidal heating/adiabatic expansion for group/cluster UDGs \citep{Jiang2019,Tremmel2020}. 
 
 % Jiang: If tidal stripping is more important, the tidal force that strips the cold gas can also remove the stars from the outskirts of the satellite, reducing its r1/2 and M⋆. Since the tidal field is stronger in the inner part of a group, an inevitable side effect, if tidal stripping is the dominant quenching mechanism, is that the UDGs closer to the cluster centre would have lower M⋆ and r1/2 than the UDGs on the outskirts or in the field.
 
@@ -745,7 +765,9 @@ discuss pros and cons of UDG and UPG (you have to assume a distance to define UP
 
 
 \section{Summary}
-
+\begin{itemize}
+    \item Future works: nucleation, intrinsic shape, LSBG cross-correlation, unsupervised machine learning, color gradient, non-par shapes.
+\end{itemize}
 
 \section*{Acknowledgment}
 JL is grateful for discussions with Meng Gu, XXX, XXXX. The authors thank Yao-Yuan Mao for his tool for visualizing image cutouts. 
